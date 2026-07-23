@@ -51,347 +51,422 @@
         );
     }
 
-function createUI() {
+    function createUI() {
 
-    var box = document.createElement("div");
+        var box = document.createElement("div");
 
-    box.style.cssText =
-        "position:fixed;" +
-        "top:20px;" +
-        "right:20px;" +
-        "width:330px;" +
-        "background:#222;" +
-        "color:white;" +
-        "padding:20px;" +
-        "z-index:999999;" +
-        "border-radius:15px;" +
-        "border:2px solid white;" +
-        "box-shadow:0 0 15px #000";
-
-
-    box.innerHTML =
-        "CHUNITHM 未プレイ抽選<br>" +
-        "<div id='st'><br></div>" +
-        "<button id='update'>🔄 一括更新</button>" +
-        "<button id='u'>⚙ Utility</button>" +
-        "<br><br>" +
-        "<div id='a'></div>" +
-        "<br>" +
-        "曲数：<input id='c' value='3' style='width:50px'>" +
-        "<button id='b'>抽選</button>" +
-        "<div id='r' style='margin-top:15px'></div>";
+        box.style.cssText =
+            "position:fixed;" +
+            "top:20px;" +
+            "right:20px;" +
+            "width:330px;" +
+            "background:#222;" +
+            "color:white;" +
+            "padding:20px;" +
+            "z-index:999999;" +
+            "border-radius:15px;" +
+            "border:2px solid white;" +
+            "box-shadow:0 0 15px #000";
 
 
-    document.body.appendChild(box);
-
-    App.ui.box = box;
-
-
-    var select = document.createElement("select");
-
-    select.style.cssText =
-        "width:300px;" +
-        "height:40px;" +
-        "font-size:16px";
-
-
-    [
-        ["BOTH","MASTER + ULTIMA"],
-        ["MASTER","MASTERのみ"],
-        ["ULTIMA","ULTIMAのみ"]
-    ].forEach(function(x){
-
-        var option=document.createElement("option");
-
-        option.value=x[0];
-        option.textContent=x[1];
-
-        select.appendChild(option);
-
-    });
+        box.innerHTML =
+            "CHUNITHM 未プレイ抽選<br>" +
+            "<div id='st'><br></div>" +
+            "<button id='update'>🔄 一括更新</button>" +
+            "<button id='u'>⚙ Utility</button>" +
+            "<br><br>" +
+            "<div id='a'></div>" +
+            "<br>" +
+            "曲数：<input id='c' value='3' style='width:50px'>" +
+            "<button id='b'>抽選</button>" +
+            "<div id='r' style='margin-top:15px'></div>";
 
 
-    box.querySelector("#a").appendChild(select);
+        document.body.appendChild(box);
+
+        App.ui.box = box;
 
 
-    App.ui.select = select;
-    App.ui.result = box.querySelector("#r");
+        var select = document.createElement("select");
+
+        select.style.cssText =
+            "width:300px;" +
+            "height:40px;" +
+            "font-size:16px";
 
 
-    box.querySelector("#b").onclick=function(){
+        [
+            ["BOTH", "MASTER + ULTIMA"],
+            ["MASTER", "MASTERのみ"],
+            ["ULTIMA", "ULTIMAのみ"]
+        ].forEach(function (x) {
 
-        var result=pickRandom(
-            Number(box.querySelector("#c").value)||3
-        );
+            var option = document.createElement("option");
 
-        drawCards(result);
+            option.value = x[0];
+            option.textContent = x[1];
 
-    };
+            select.appendChild(option);
+
+        });
 
 
-    box.querySelector("#update").onclick=function(){
+        box.querySelector("#a").appendChild(select);
 
-        updateAll();
 
-    };
+        App.ui.select = select;
+        App.ui.result = box.querySelector("#r");
 
-    select.onchange=function(){
 
-    App.state.difficulty=this.value;
+        box.querySelector("#b").onclick = function () {
 
-    };
+            var result = pickRandom(
+                Number(box.querySelector("#c").value) || 3
+            );
+
+            drawCards(result);
+
+        };
+
+
+        box.querySelector("#update").onclick = function () {
+
+            updateAll();
+
+        };
+
+        select.onchange = function () {
+
+            App.state.difficulty = this.value;
+
+        };
+
+        box.querySelector("#u").onclick = function () {
+
+            createUtilityUI();
+
+        };
+
+    }
+
+    function createUtilityUI() {
+
+        var u = document.createElement("div");
+
+        u.style.cssText =
+            "position:fixed;" +
+            "top:20px;" +
+            "right:20px;" +
+            "width:330px;" +
+            "background:#222;" +
+            "color:white;" +
+            "padding:20px;" +
+            "z-index:1000000;" +
+            "border-radius:15px;" +
+            "border:2px solid white;" +
+            "box-shadow:0 0 15px #000";
+
+
+        u.innerHTML =
+            "Utility<br><br>" +
+            "<div id='ust'></div>" +
+            "<br>" +
+            "<button id='del'>データ削除</button>" +
+            "<button id='cl'>閉じる</button>";
+
+
+        document.body.appendChild(u);
+
+
+        function updateUtilityStatus() {
+
+            var d = App.data;
+
+            u.querySelector("#ust").innerHTML =
+                "MASTER: " + d.MASTER.length + "曲<br>" +
+                "ULTIMA: " + d.ULTIMA.length + "曲";
+
+        }
+
+
+        updateUtilityStatus();
+
+
+        u.querySelector("#del").onclick = function () {
+
+            localStorage.removeItem(STORAGE_KEY);
+
+            App.data = {
+                MASTER: [],
+                ULTIMA: []
+            };
+
+            updateStatus();
+
+            updateUtilityStatus();
+
+            alert("データ削除しました");
+
+        };
+
+
+        u.querySelector("#cl").onclick = function () {
+
+            u.remove();
+
+        };
 
     }
 
     function updateStatus() {
 
-    if(!App.ui.box)return;
+        if (!App.ui.box) return;
 
-    var d=App.data;
+        var d = App.data;
 
-    App.ui.box.querySelector("#st").innerHTML =
-        "MASTER: " + d.MASTER.length + "曲<br>" +
-        "ULTIMA: " + d.ULTIMA.length + "曲";
+        App.ui.box.querySelector("#st").innerHTML =
+            "MASTER: " + d.MASTER.length + "曲<br>" +
+            "ULTIMA: " + d.ULTIMA.length + "曲";
 
-}
-function pickRandom(count) {
+    }
+    function pickRandom(count) {
 
-    var pool = [];
+        var pool = [];
 
-    var mode = App.state.difficulty;
+        var mode = App.state.difficulty;
 
 
-    ["MASTER", "ULTIMA"].forEach(function(diff){
+        ["MASTER", "ULTIMA"].forEach(function (diff) {
 
-        if (
-            mode === "BOTH" ||
-            mode === diff
-        ) {
+            if (
+                mode === "BOTH" ||
+                mode === diff
+            ) {
 
-            App.data[diff].forEach(function(song){
+                App.data[diff].forEach(function (song) {
 
-                pool.push({
-                    diff: diff,
-                    name: song.name,
-                    genre: song.genre
+                    pool.push({
+                        diff: diff,
+                        name: song.name,
+                        genre: song.genre
+                    });
+
                 });
 
-            });
+            }
+
+        });
+
+
+        var result = [];
+
+
+        while (
+            result.length < count &&
+            pool.length > 0
+        ) {
+
+            var index = Math.floor(
+                Math.random() * pool.length
+            );
+
+            result.push(
+                pool.splice(index, 1)[0]
+            );
 
         }
 
-    });
+
+        return result;
+
+    }
+    function drawCards(list) {
+
+        App.ui.result.innerHTML =
+            list.map(function (x) {
+
+                var bg =
+                    x.diff === "MASTER"
+                        ? "rgb(191,106,255)"
+                        : "rgb(35,35,35)";
 
 
-    var result = [];
+                var border =
+                    x.diff === "MASTER"
+                        ? "white"
+                        : "rgb(255,58,58)";
 
 
-    while (
-        result.length < count &&
-        pool.length > 0
-    ) {
+                return (
+                    "<div style='" +
+                    "background:" + bg + ";" +
+                    "border:2px solid " + border + ";" +
+                    "padding:12px;" +
+                    "margin-top:8px;" +
+                    "border-radius:10px;" +
+                    "color:white'>" +
 
-        var index = Math.floor(
-            Math.random() * pool.length
-        );
+                    "<div style='" +
+                    "display:inline-block;" +
+                    "background:rgba(0,0,0,.35);" +
+                    "padding:3px 8px;" +
+                    "border-radius:5px;" +
+                    "font-size:13px;" +
+                    "font-weight:bold'>" +
+                    x.diff +
+                    " / " +
+                    x.genre +
+                    "</div>" +
 
-        result.push(
-            pool.splice(index,1)[0]
-        );
+                    "<div style='" +
+                    "font-size:17px;" +
+                    "font-weight:bold;" +
+                    "margin-top:8px'>" +
+                    x.name +
+                    "</div>" +
+
+                    "</div>"
+                );
+
+            }).join("");
+
+    }
+
+    function fetchMaster() {
+
+        return fetch(
+            "https://new.chunithm-net.com/chuni-mobile/html/mobile/record/musicGenre/master"
+        )
+            .then(function (res) {
+
+                return res.text();
+
+            })
+            .then(function (html) {
+
+                return parseMusicList(html);
+
+            });
 
     }
 
 
-    return result;
+    function fetchUltima() {
 
-}
-function drawCards(list) {
+        return fetch(
+            "https://new.chunithm-net.com/chuni-mobile/html/mobile/record/musicGenre/ultima"
+        )
+            .then(function (res) {
 
-    App.ui.result.innerHTML =
-        list.map(function(x){
+                return res.text();
 
-            var bg =
-                x.diff === "MASTER"
-                ? "rgb(191,106,255)"
-                : "rgb(35,35,35)";
+            })
+            .then(function (html) {
 
+                return parseMusicList(html);
 
-            var border =
-                x.diff === "MASTER"
-                ? "white"
-                : "rgb(255,58,58)";
+            });
 
+    }
 
-            return (
-                "<div style='" +
-                "background:"+bg+";" +
-                "border:2px solid "+border+";" +
-                "padding:12px;" +
-                "margin-top:8px;" +
-                "border-radius:10px;" +
-                "color:white'>" +
+    function updateAll() {
 
-                "<div style='" +
-                "display:inline-block;" +
-                "background:rgba(0,0,0,.35);" +
-                "padding:3px 8px;" +
-                "border-radius:5px;" +
-                "font-size:13px;" +
-                "font-weight:bold'>" +
-                x.diff +
-                " / " +
-                x.genre +
-                "</div>" +
+        Promise.all([
+            fetchMaster(),
+            fetchUltima()
+        ])
+            .then(function (result) {
 
-                "<div style='" +
-                "font-size:17px;" +
-                "font-weight:bold;" +
-                "margin-top:8px'>" +
-                x.name +
-                "</div>" +
+                App.data.MASTER = result[0];
+                App.data.ULTIMA = result[1];
 
-                "</div>"
-            );
+                saveData();
 
-        }).join("");
+                updateStatus();
 
-}
+                alert(
+                    "更新完了\n" +
+                    "MASTER: " + App.data.MASTER.length + "曲\n" +
+                    "ULTIMA: " + App.data.ULTIMA.length + "曲"
+                );
 
-function fetchMaster() {
+            })
+            .catch(function (e) {
 
-    return fetch(
-        "https://new.chunithm-net.com/chuni-mobile/html/mobile/record/musicGenre/master"
-    )
-    .then(function(res){
+                console.error(e);
 
-        return res.text();
+                alert(
+                    "取得失敗しました"
+                );
 
-    })
-    .then(function(html){
+            });
 
-        return parseMusicList(html);
+    }
 
-    });
+    function parseMusicList(html) {
 
-}
+        var parser = new DOMParser();
 
-
-function fetchUltima() {
-
-    return fetch(
-        "https://new.chunithm-net.com/chuni-mobile/html/mobile/record/musicGenre/ultima"
-    )
-    .then(function(res){
-
-        return res.text();
-
-    })
-    .then(function(html){
-
-        return parseMusicList(html);
-
-    });
-
-}
-
-function updateAll() {
-
-    Promise.all([
-        fetchMaster(),
-        fetchUltima()
-    ])
-    .then(function(result){
-
-        App.data.MASTER = result[0];
-        App.data.ULTIMA = result[1];
-
-        saveData();
-
-        updateStatus();
-
-        alert(
-            "更新完了\n" +
-            "MASTER: " + App.data.MASTER.length + "曲\n" +
-            "ULTIMA: " + App.data.ULTIMA.length + "曲"
+        var doc = parser.parseFromString(
+            html,
+            "text/html"
         );
 
-    })
-    .catch(function(e){
 
-        console.error(e);
+        var songs = [];
 
-        alert(
-            "取得失敗しました"
+        var genre = "";
+
+
+        doc.querySelectorAll(".genre,.musiclist_box")
+            .forEach(function (e) {
+
+                if (e.classList.contains("genre")) {
+
+                    genre = e.innerText.trim();
+
+                }
+                else {
+
+                    var form = e.closest("form");
+
+                    if (
+                        form &&
+                        form.innerText.includes("HIGH SCORE")
+                    ) {
+                        return;
+                    }
+
+
+                    var title = e.querySelector(".music_title");
+
+
+                    if (title) {
+
+                        songs.push({
+
+                            name: title.innerText.trim(),
+
+                            genre: genre
+
+                        });
+
+                    }
+
+                }
+
+            });
+
+
+        console.log(
+            "解析結果:",
+            songs.length,
+            songs
         );
 
-    });
 
-}
+        return songs;
 
-function parseMusicList(html) {
-
-    var parser = new DOMParser();
-
-    var doc = parser.parseFromString(
-        html,
-        "text/html"
-    );
-
-
-    var songs = [];
-
-    var genre = "";
-
-
-    doc.querySelectorAll(".genre,.musiclist_box")
-    .forEach(function(e){
-
-        if(e.classList.contains("genre")){
-
-            genre = e.innerText.trim();
-
-        }
-        else {
-
-            var form = e.closest("form");
-
-            if(
-                form &&
-                form.innerText.includes("HIGH SCORE")
-            ){
-                return;
-            }
-
-
-            var title = e.querySelector(".music_title");
-
-
-            if(title){
-
-                songs.push({
-
-                    name: title.innerText.trim(),
-
-                    genre: genre
-
-                });
-
-            }
-
-        }
-
-    });
-
-
-    console.log(
-        "解析結果:",
-        songs.length,
-        songs
-    );
-
-
-    return songs;
-
-}
+    }
 
 })();
