@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="description" content="CHUNITHM-NETのプレイ状況に合わせて楽曲をランダム抽選するブックマークレット">
 <title>CHUNITHM Unplayed Picker</title>
 
 <style>
@@ -12,241 +12,311 @@
 }
 
 body {
-    margin:0;
-    padding:30px 16px;
-    background:#111;
-    color:#eee;
-    font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
+    margin: 0;
+    padding: 30px 16px;
+    background: #111;
+    color: #eee;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "Noto Sans JP", sans-serif;
+    line-height: 1.7;
 }
 
 .container {
-    max-width:800px;
-    margin:auto;
+    max-width: 800px;
+    margin: auto;
 }
 
 h1 {
-    font-size:32px;
-    margin-bottom:8px;
-}
-
-.subtitle {
-    color:#aaa;
-    margin-bottom:30px;
-}
-
-.card {
-    background:#1c1c1c;
-    border:1px solid #333;
-    border-radius:16px;
-    padding:24px;
-    margin-bottom:20px;
+    margin: 0 0 8px;
+    font-size: clamp(27px, 6vw, 36px);
+    line-height: 1.25;
 }
 
 h2 {
-    margin-top:0;
-    font-size:20px;
+    margin: 0 0 14px;
+    font-size: 20px;
 }
 
+h3 {
+    margin: 8px 0 10px;
+    font-size: 17px;
+}
+
+a {
+    color: #b99aff;
+}
+
+.subtitle {
+    margin: 0 0 30px;
+    color: #aaa;
+}
+
+.card {
+    margin-bottom: 20px;
+    padding: 24px;
+    border: 1px solid #333;
+    border-radius: 16px;
+    background: #1c1c1c;
+}
+
+.feature-list,
+.notes {
+    padding-left: 1.4em;
+}
+
+.tease,
+.requirement {
+    padding: 11px 13px;
+    border: 1px solid #393939;
+    border-radius: 10px;
+    background: #252525;
+}
+
+.tease {
+    margin-top: 16px;
+}
+
+.requirement {
+    margin: 16px 0;
+    border-color: #725b29;
+    background: #2b2619;
+}
+
+.requirement strong {
+    color: #facc6b;
+}
 
 .step {
-    background:#252525;
-    padding:14px;
-    border-radius:10px;
-    margin:10px 0;
+    margin: 10px 0;
+    padding: 14px;
+    border-radius: 10px;
+    background: #252525;
 }
 
-
 button {
-    border:none;
-    cursor:pointer;
-    background:#8b5cf6;
-    color:white;
-    padding:14px 20px;
-    border-radius:12px;
-    font-size:16px;
-    font-weight:bold;
+    padding: 14px 20px;
+    border: 0;
+    border-radius: 12px;
+    background: #8b5cf6;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 button:hover {
-    opacity:.85;
+    opacity: .88;
 }
 
+button:focus-visible {
+    outline: 3px solid #c4b5fd;
+    outline-offset: 3px;
+}
 
 .code {
-    margin-top:15px;
-    background:#000;
-    padding:12px;
-    border-radius:10px;
-    font-family:monospace;
-    font-size:12px;
-    overflow-wrap:anywhere;
-    color:#aaa;
+    margin-top: 15px;
+    padding: 12px;
+    overflow-wrap: anywhere;
+    border-radius: 10px;
+    background: #000;
+    color: #aaa;
+    font-family: monospace;
+    font-size: 12px;
 }
-
 
 .notice {
-    color:#aaa;
-    font-size:14px;
+    color: #aaa;
+    font-size: 14px;
 }
 
+.release {
+    margin-top: 16px;
+    padding-left: 16px;
+    border-left: 4px solid #8b5cf6;
+}
+
+.release time {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.release ul {
+    margin-bottom: 0;
+    padding-left: 1.4em;
+}
+
+details.release-notes {
+    border: 1px solid #333;
+    border-radius: 12px;
+    background: #1c1c1c;
+}
+
+details.release-notes summary {
+    padding: 18px 22px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+details.release-notes[open] summary {
+    border-bottom: 1px solid #333;
+}
+
+.release-content {
+    padding: 4px 22px 22px;
+}
+
+#msg {
+    min-height: 28px;
+}
 
 .footer {
-    text-align:center;
-    color:#666;
-    margin-top:40px;
+    margin-top: 40px;
+    color: #666;
+    text-align: center;
 }
 
-</style>
+@media (max-width: 520px) {
+    body {
+        padding: 20px 12px;
+    }
 
+    .card {
+        padding: 19px;
+        border-radius: 13px;
+    }
+
+}
+</style>
 </head>
 
-
 <body>
+<main class="container">
+    <h1>CHUNITHM Unplayed Picker</h1>
+    <p class="subtitle">
+        プレイ状況に合わせて、次に遊ぶ楽曲をランダムセレクト。
+    </p>
 
-<div class="container">
+    <section class="card">
+        <h2>概要</h2>
+        <p>
+            CHUNITHM-NETからMASTER・ULTIMAの未プレイ楽曲を取得し、
+            次に遊ぶ楽曲をランダム抽選するブックマークレットです。
+        </p>
 
+        <div class="tease">
+            <strong>全曲埋めた人へ</strong><br>
+            全曲埋めた人のためにモードを追加しました。
+            埋まったことが取得できた場合そのモードに移動します。
+        </div>
 
-<h1>
-CHUNITHM Unplayed Picker
-</h1>
+        <ul class="feature-list">
+            <li>MASTER・ULTIMA対応</li>
+            <li>ジャンル・レベル表示</li>
+            <li>解禁が必要な曲の表示・除外設定</li>
+            <li>スマートフォン対応</li>
+        </ul>
 
-<p class="subtitle">
-CHUNITHM-NETの未プレイ楽曲をランダム抽選するブックマークレット
-</p>
+        <div class="requirement">
+            <strong>CHUNITHM-NET スタンダードコースへの加入が必要です。</strong><br>
+            本ツールはCHUNITHM-NETの「レコード」機能から情報を取得します。
+        </div>
+    </section>
 
+    <section class="card">
+        <h2>導入方法</h2>
 
+        <div class="requirement">
+            <strong>事前にスタンダードコースへ加入してください。</strong><br>
+            未加入の場合、必要なレコード情報を取得できません。
+        </div>
 
-<div class="card">
+        <div class="step"><strong>1.</strong> 下のボタンでブックマークレットをコピー</div>
+        <button type="button" onclick="copyBookmarklet()">📋 コピーする</button>
+        <div id="msg" role="status" aria-live="polite"></div>
 
-<h2>概要</h2>
+        <div class="step"><strong>2.</strong> ブラウザで任意のページをブックマーク</div>
+        <div class="step"><strong>3.</strong> 作成したブックマークを編集し、URL欄をコピーした内容に置換</div>
+        <div class="step"><strong>4.</strong> CHUNITHM-NETへログイン後、作成したブックマークを実行</div>
+        <div class="step"><strong>5.</strong> 初回起動後、「一括更新」を押して楽曲情報を取得</div>
+    </section>
 
-<p>
-MASTER / ULTIMAの未プレイ楽曲を取得し、
-ジャンル付きでランダム抽選できます。
-</p>
+    <section class="card">
+        <h2>使い方</h2>
+        <ol>
+            <li>CHUNITHM-NET内でブックマークレットを実行します。</li>
+            <li>「一括更新」で最新の楽曲情報を保存します。</li>
+            <li>MASTER・ULTIMAと抽選曲数を選びます。</li>
+            <li>「抽選」を押します。</li>
+        </ol>
+        <p class="notice">
+            解禁が必要な曲はUtilityから抽選対象外にできます。
+        </p>
+    </section>
 
-<ul>
-<li>MASTER / ULTIMA対応</li>
-<li>CHUNITHM-NETから自動取得</li>
-<li>LocalStorage保存</li>
-<li>スマートフォン対応</li>
-</ul>
+    <section class="card">
+        <h2>PCの場合</h2>
+        <p>
+            Chromeなどでは、コピーした内容を新規ブックマークのURL欄へ
+            貼り付けて使用できます。
+        </p>
+    </section>
 
-</div>
+    <section class="card">
+        <h2>ブックマークレット内容</h2>
+        <div class="code" id="code"></div>
+    </section>
 
+    <section class="card">
+        <h2>注意事項</h2>
+        <ul class="notes">
+            <li>CHUNITHM-NETへログインした状態で使用してください。</li>
+            <li>レコード機能を利用するため、スタンダードコースへの加入が必要です。</li>
+            <li>取得データと設定はブラウザ内のLocalStorageへ保存されます。</li>
+            <li>解禁状態はスコアとツール内の定義から推定しています。</li>
+            <li>CHUNITHM-NETの仕様変更により動作しなくなる場合があります。</li>
+            <li>本ツールは非公式であり、SEGAおよびCHUNITHM公式とは関係ありません。</li>
+        </ul>
+    </section>
 
+    <details class="release-notes">
+        <summary>リリースノート</summary>
+        <div class="release-content">
+            <article class="release">
+                <time datetime="2026-07-25">2026-07-25</time>
+                <h3>公開版</h3>
+                <ul>
+                    <li>CHUNITHM-NET内の任意ページから一括更新できるようになりました。</li>
+                    <li>MASTER・ULTIMAのジャンルとレベル取得に対応しました。</li>
+                    <li>全曲プレイ後に利用できる追加モードを実装しました。</li>
+                    <li>解禁が必要な曲の鍵表示と、抽選から除外する設定を追加しました。</li>
+                    <li>公式画面を参考にTRACKカードとULTIMA表示を刷新しました。</li>
+                    <li>スマートフォン向けの表示を調整しました。</li>
+                </ul>
+            </article>
+        </div>
+    </details>
 
-<div class="card">
-
-<h2>導入方法</h2>
-
-
-<div class="step">
-<strong>1.</strong> 下のボタンでブックマークレットをコピー
-</div>
-
-
-<button onclick="copyBookmarklet()">
-📋 コピーする
-</button>
-
-
-<div id="msg"></div>
-
-
-<div class="step">
-<strong>2.</strong> ブラウザで適当なページをブックマーク
-</div>
-
-
-<div class="step">
-<strong>3.</strong> 作成したブックマークを編集し、URL欄をコピーした内容に置換
-</div>
-
-
-<div class="step">
-<strong>4.</strong> CHUNITHM-NETへログイン後、ブックマークレットを実行
-</div>
-
-
-</div>
-
-
-
-<div class="card">
-
-<h2>PCの場合</h2>
-
-<p>
-Chromeなどでは、コピーした内容を新規ブックマークのURL欄へ貼り付けて使用できます。
-</p>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>ブックマークレット内容</h2>
-
-<div class="code" id="code"></div>
-
-</div>
-
-
-
-<div class="card">
-
-<h2>注意事項</h2>
-
-<ul>
-<li>CHUNITHM-NETへログインした状態で使用してください</li>
-<li>取得データはブラウザ内(LocalStorage)に保存されます</li>
-<li>公式ツールではありません</li>
-</ul>
-
-</div>
-
-
-
-<div class="footer">
-CHUNITHM Unplayed Picker
-</div>
-
-
-
-</div>
-
-
+    <footer class="footer">CHUNITHM Unplayed Picker</footer>
+</main>
 
 <script>
-
 var bookmarklet =
-"javascript:(()=>{fetch('https://maqlaguh.github.io/chuni-unplayed-picker/main.js').then(r=>r.text()).then(eval)})()";
+    "javascript:(()=>{fetch('https://maqlaguh.github.io/chuni-unplayed-picker/main.js').then(r=>r.text()).then(eval)})()";
 
+document.getElementById("code").textContent = bookmarklet;
 
-document.getElementById("code").textContent =
-bookmarklet;
-
-
-function copyBookmarklet(){
-
+function copyBookmarklet() {
     navigator.clipboard.writeText(bookmarklet)
-    .then(function(){
-
-        document.getElementById("msg").innerHTML =
-        "<p style='color:#8b5cf6;'>コピーしました</p>";
-
-    });
-
+        .then(function () {
+            document.getElementById("msg").innerHTML =
+                "<p style='color:#a78bfa'>コピーしました</p>";
+        })
+        .catch(function () {
+            document.getElementById("msg").innerHTML =
+                "<p style='color:#f87171'>コピーできませんでした。下の内容を手動でコピーしてください。</p>";
+        });
 }
-
 </script>
-
-
 </body>
 </html>
