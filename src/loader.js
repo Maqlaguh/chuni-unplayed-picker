@@ -34,7 +34,12 @@
                     return response.text();
                 })
                 .then(function (code) {
-                    (0, eval)(code);
+                    window.CHUNITHM_PICKER_VERSION_LOADER = true;
+                    try {
+                        (0, eval)(code);
+                    } finally {
+                        delete window.CHUNITHM_PICKER_VERSION_LOADER;
+                    }
                     localStorage.setItem(versionKey, version);
 
                     if (previous && previous !== version) {
@@ -57,4 +62,3 @@
             );
         });
 })();
-

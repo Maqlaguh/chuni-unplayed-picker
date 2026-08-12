@@ -1,5 +1,11 @@
 !function() {
     "use strict";
+    var loadedViaVersionLoader = !0 === window.CHUNITHM_PICKER_VERSION_LOADER;
+    try {
+        delete window.CHUNITHM_PICKER_VERSION_LOADER;
+    } catch (loaderFlagError) {
+        window.CHUNITHM_PICKER_VERSION_LOADER = !1;
+    }
     var e, t, r, i, n, o, a, l, d, s, c = "chuni_unplayed_database", p = "chuni_random_picker_settings", u = [ "10", "10+", "11", "11+", "12", "12+", "13", "13+", "14", "14+", "15", "15+", "16" ], f = "15+", g = [ [ "プリズム△▽リズム", "MASTER" ], [ "ARAIS", "MASTER" ], [ "勦滅", "MASTER" ], [ "Individual on parade!", "MASTER" ], [ "アイシング・ドリーム", "MASTER" ], [ "いちげき！のテーマ", "MASTER" ], [ "Pastel Sprinkles", "MASTER" ], [ "Honey Bear", "MASTER" ], [ "ALLNIGHT_DANCER", "MASTER" ], [ "Garakuta Doll Play(sasakure.UK clutter remix)", "MASTER" ], [ "神鳴", "MASTER" ], [ "Tru'nembra", "MASTER" ], [ "Everything Will Be One", "MASTER" ], [ "ナラク・オン・エア", "MASTER" ], [ "システム", "MASTER" ], [ "恋伯色", "MASTER" ], [ "OUTRAGE", "MASTER" ], [ "Warp Speed", "MASTER" ], [ "In the Straying Story", "MASTER" ], [ "PhenomenoN", "MASTER" ], [ "輪廻玲々", "MASTER" ], [ "hyperreality", "MASTER" ], [ "Deep Blue", "MASTER" ], [ "DEvourER", "MASTER" ], [ "創 -汝ら新世界へ歩む者なり-", "MASTER" ], [ "魔法に照らされたアンコール", "MASTER" ], [ "ジナ", "MASTER" ], [ "Road to Aventura", "MASTER" ], [ "☆をつなぐシュトラール", "MASTER" ], [ "MOMOCO68000", "MASTER" ], [ "〚回帰〛 ～Scherzo ~フォルトゥーナの悪戯~", "MASTER" ], [ "tHE uNcontRollaBle ciNdeRella", "MASTER" ], [ "轆轤首", "MASTER" ], [ "天地のうた", "MASTER" ], [ "Aether Wind", "MASTER" ], [ "そして春めくモノローグ", "MASTER" ], [ "Sweet & Sour", "MASTER" ], [ "パステル・シタイ！", "MASTER" ], [ "彩祭ワンダーワン！", "MASTER" ], [ "Fly Better!", "MASTER" ], [ "Phantom Crisis", "MASTER" ], [ "Beenden", "MASTER" ], [ "EFX", "MASTER" ], [ "薄明のクオリア", "MASTER" ], [ "月葬", "MASTER" ], [ "YOUNITHM", "MASTER" ], [ "YOUNITHM", "ULTIMA" ], [ "Melodiniq", "MASTER" ], [ "Melodiniq", "ULTIMA" ], [ "Linked Tune", "MASTER" ], [ "ひなたでワチャチャ", "MASTER" ], [ "白昼熱演", "MASTER" ], [ "絶対一生これで生きていく！", "MASTER" ], [ "Luminous CANDY", "MASTER" ], [ "SOMA TONE", "MASTER" ], [ "Tachy∅n", "MASTER" ], [ "ちゅ、お注射。", "MASTER" ], [ "チュウニペンギンのテーマ～左下より愛をこめて～", "MASTER" ] ], x = {
         UNPLAYED: {
             title: "CHUNITHM UNPLAYED PICKER",
@@ -591,6 +597,5 @@
             i.style.overflow = n.bodyOverflow, i.style.overscrollBehavior = n.bodyOverscroll, 
             delete window.CHUNITHM_PICKER_SCROLL_LOCK);
         }
-    }, v(), C();
+    }, v(), C(), loadedViaVersionLoader || I("旧ブックマークレットから起動しています。導入ページから再登録すると自動更新を利用できます");
 }();
-
