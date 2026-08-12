@@ -1,78 +1,6 @@
-// CHUNITHM Random Picker
-
-(function () {
+!function() {
     "use strict";
-
-    var STORAGE_KEY = "chuni_unplayed_database";
-    var SETTINGS_KEY = "chuni_random_picker_settings";
-    var GENRE_ENTRY_URL =
-        "/chuni-mobile/html/mobile/record/musicGenre/";
-    var LEVEL_ENTRY_URL =
-        "/chuni-mobile/html/mobile/record/musicLevel/";
-    var MIN_LEVEL_VALUE = 12; // LEVEL 10
-    var SSS_SCORE = 1007500;
-    var UNLOCK_REQUIRED_CHARTS = [
-        ["プリズム△▽リズム", "MASTER"],
-        ["ARAIS", "MASTER"],
-        ["勦滅", "MASTER"],
-        ["Individual on parade!", "MASTER"],
-        ["アイシング・ドリーム", "MASTER"],
-        ["いちげき！のテーマ", "MASTER"],
-        ["Pastel Sprinkles", "MASTER"],
-        ["Honey Bear", "MASTER"],
-        ["ALLNIGHT_DANCER", "MASTER"],
-        ["Garakuta Doll Play(sasakure.UK clutter remix)", "MASTER"],
-        ["神鳴", "MASTER"],
-        ["Tru'nembra", "MASTER"],
-        ["Everything Will Be One", "MASTER"],
-        ["ナラク・オン・エア", "MASTER"],
-        ["システム", "MASTER"],
-        ["恋伯色", "MASTER"],
-        ["OUTRAGE", "MASTER"],
-        ["Warp Speed", "MASTER"],
-        ["In the Straying Story", "MASTER"],
-        ["PhenomenoN", "MASTER"],
-        ["輪廻玲々", "MASTER"],
-        ["hyperreality", "MASTER"],
-        ["Deep Blue", "MASTER"],
-        ["DEvourER", "MASTER"],
-        ["創 -汝ら新世界へ歩む者なり-", "MASTER"],
-        ["魔法に照らされたアンコール", "MASTER"],
-        ["ジナ", "MASTER"],
-        ["Road to Aventura", "MASTER"],
-        ["☆をつなぐシュトラール", "MASTER"],
-        ["MOMOCO68000", "MASTER"],
-        ["〚回帰〛 ～Scherzo ~フォルトゥーナの悪戯~", "MASTER"],
-        ["tHE uNcontRollaBle ciNdeRella", "MASTER"],
-        ["轆轤首", "MASTER"],
-        ["天地のうた", "MASTER"],
-        ["Aether Wind", "MASTER"],
-        ["そして春めくモノローグ", "MASTER"],
-        ["Sweet & Sour", "MASTER"],
-        ["パステル・シタイ！", "MASTER"],
-        ["彩祭ワンダーワン！", "MASTER"],
-        ["Fly Better!", "MASTER"],
-        ["Phantom Crisis", "MASTER"],
-        ["Beenden", "MASTER"],
-        ["EFX", "MASTER"],
-        ["薄明のクオリア", "MASTER"],
-        ["月葬", "MASTER"],
-        ["YOUNITHM", "MASTER"],
-        ["YOUNITHM", "ULTIMA"],
-        ["Melodiniq", "MASTER"],
-        ["Melodiniq", "ULTIMA"],
-        ["Linked Tune", "MASTER"],
-        ["ひなたでワチャチャ", "MASTER"],
-        ["白昼熱演", "MASTER"],
-        ["絶対一生これで生きていく！", "MASTER"],
-        ["Luminous CANDY", "MASTER"],
-        ["SOMA TONE", "MASTER"],
-        ["Tachy∅n", "MASTER"],
-        ["ちゅ、お注射。", "MASTER"],
-        ["チュウニペンギンのテーマ～左下より愛をこめて～", "MASTER"]
-    ];
-
-    var MODE_DEFINITIONS = {
+    var e, t, r, i, n, o, a, l, d, s, c = "chuni_unplayed_database", p = "chuni_random_picker_settings", u = [ "10", "10+", "11", "11+", "12", "12+", "13", "13+", "14", "14+", "15", "15+", "16" ], f = "15+", g = [ [ "プリズム△▽リズム", "MASTER" ], [ "ARAIS", "MASTER" ], [ "勦滅", "MASTER" ], [ "Individual on parade!", "MASTER" ], [ "アイシング・ドリーム", "MASTER" ], [ "いちげき！のテーマ", "MASTER" ], [ "Pastel Sprinkles", "MASTER" ], [ "Honey Bear", "MASTER" ], [ "ALLNIGHT_DANCER", "MASTER" ], [ "Garakuta Doll Play(sasakure.UK clutter remix)", "MASTER" ], [ "神鳴", "MASTER" ], [ "Tru'nembra", "MASTER" ], [ "Everything Will Be One", "MASTER" ], [ "ナラク・オン・エア", "MASTER" ], [ "システム", "MASTER" ], [ "恋伯色", "MASTER" ], [ "OUTRAGE", "MASTER" ], [ "Warp Speed", "MASTER" ], [ "In the Straying Story", "MASTER" ], [ "PhenomenoN", "MASTER" ], [ "輪廻玲々", "MASTER" ], [ "hyperreality", "MASTER" ], [ "Deep Blue", "MASTER" ], [ "DEvourER", "MASTER" ], [ "創 -汝ら新世界へ歩む者なり-", "MASTER" ], [ "魔法に照らされたアンコール", "MASTER" ], [ "ジナ", "MASTER" ], [ "Road to Aventura", "MASTER" ], [ "☆をつなぐシュトラール", "MASTER" ], [ "MOMOCO68000", "MASTER" ], [ "〚回帰〛 ～Scherzo ~フォルトゥーナの悪戯~", "MASTER" ], [ "tHE uNcontRollaBle ciNdeRella", "MASTER" ], [ "轆轤首", "MASTER" ], [ "天地のうた", "MASTER" ], [ "Aether Wind", "MASTER" ], [ "そして春めくモノローグ", "MASTER" ], [ "Sweet & Sour", "MASTER" ], [ "パステル・シタイ！", "MASTER" ], [ "彩祭ワンダーワン！", "MASTER" ], [ "Fly Better!", "MASTER" ], [ "Phantom Crisis", "MASTER" ], [ "Beenden", "MASTER" ], [ "EFX", "MASTER" ], [ "薄明のクオリア", "MASTER" ], [ "月葬", "MASTER" ], [ "YOUNITHM", "MASTER" ], [ "YOUNITHM", "ULTIMA" ], [ "Melodiniq", "MASTER" ], [ "Melodiniq", "ULTIMA" ], [ "Linked Tune", "MASTER" ], [ "ひなたでワチャチャ", "MASTER" ], [ "白昼熱演", "MASTER" ], [ "絶対一生これで生きていく！", "MASTER" ], [ "Luminous CANDY", "MASTER" ], [ "SOMA TONE", "MASTER" ], [ "Tachy∅n", "MASTER" ], [ "ちゅ、お注射。", "MASTER" ], [ "チュウニペンギンのテーマ～左下より愛をこめて～", "MASTER" ] ], x = {
         UNPLAYED: {
             title: "CHUNITHM UNPLAYED PICKER",
             label: "未プレイ",
@@ -99,19 +27,9 @@
             title: "CHUNITHM AJ CHALLENGE",
             label: "AJ未達成",
             theme: {
-                accent:
-                    "linear-gradient(135deg,rgba(255,255,255,.38)," +
-                    "rgba(193,213,173,.32))," +
-                    "repeating-conic-gradient(from 18deg at 30% 45%," +
-                    "#e8efd7 0deg 14deg,#cbd9eb 14deg 27deg," +
-                    "#ddd1eb 27deg 39deg,#d4e7cf 39deg 53deg)",
+                accent: "linear-gradient(135deg,rgba(255,255,255,.38),rgba(193,213,173,.32)),repeating-conic-gradient(from 18deg at 30% 45%,#e8efd7 0deg 14deg,#cbd9eb 14deg 27deg,#ddd1eb 27deg 39deg,#d4e7cf 39deg 53deg)",
                 accentDark: "#98aaa2",
-                panel:
-                    "linear-gradient(145deg,rgba(250,253,240,.94)," +
-                    "rgba(225,234,247,.92) 48%,rgba(233,242,218,.94))," +
-                    "repeating-conic-gradient(from 22deg at 35% 35%," +
-                    "#edf3dc 0deg 12deg,#d2dced 12deg 25deg," +
-                    "#e2d7ed 25deg 38deg,#d7ead1 38deg 52deg)",
+                panel: "linear-gradient(145deg,rgba(250,253,240,.94),rgba(225,234,247,.92) 48%,rgba(233,242,218,.94)),repeating-conic-gradient(from 22deg at 35% 35%,#edf3dc 0deg 12deg,#d2dced 12deg 25deg,#e2d7ed 25deg 38deg,#d7ead1 38deg 52deg)",
                 surface: "rgba(255,255,255,.68)",
                 control: "rgba(244,248,242,.9)",
                 text: "#172125",
@@ -125,17 +43,9 @@
             title: "CHUNITHM RANDOM PICKER",
             label: "全曲",
             theme: {
-                accent:
-                    "linear-gradient(110deg,rgba(0,112,28,.78) 0%," +
-                    "rgba(2,20,8,.74) 23%,rgba(176,0,0,.82) 42%," +
-                    "rgba(90,0,18,.82) 65%,rgba(0,0,116,.86) 100%)," +
-                    "repeating-conic-gradient(from 35deg at 25% 55%," +
-                    "#063f10 0deg 12deg,#061507 12deg 24deg," +
-                    "#780606 24deg 38deg,#23050b 38deg 51deg," +
-                    "#080858 51deg 65deg,#020617 65deg 78deg)",
+                accent: "linear-gradient(110deg,rgba(0,112,28,.78) 0%,rgba(2,20,8,.74) 23%,rgba(176,0,0,.82) 42%,rgba(90,0,18,.82) 65%,rgba(0,0,116,.86) 100%),repeating-conic-gradient(from 35deg at 25% 55%,#063f10 0deg 12deg,#061507 12deg 24deg,#780606 24deg 38deg,#23050b 38deg 51deg,#080858 51deg 65deg,#020617 65deg 78deg)",
                 accentDark: "#01040a",
-                panel:
-                    "linear-gradient(145deg,#0b111a,#04070d 60%,#101324)",
+                panel: "linear-gradient(145deg,#0b111a,#04070d 60%,#101324)",
                 surface: "rgba(0,0,0,.32)",
                 control: "#182231",
                 text: "#ffffff",
@@ -145,9 +55,7 @@
                 buttonText: "#ffffff"
             }
         }
-    };
-
-    var App = {
+    }, b = {
         data: null,
         settings: null,
         ui: {},
@@ -155,1113 +63,534 @@
             difficulty: "BOTH",
             mode: "UNPLAYED",
             candidates: [],
-            busy: false
+            results: [],
+            kept: {},
+            renderResults: null,
+            busy: !1
         }
     };
-
-    init();
-    installDeveloperTools();
-
-    function init() {
-        removePreviousUI();
-        App.settings = loadSettings();
-        App.data = normalizeStoredData(loadData());
-        createUI();
-        refreshMode();
-        updateDisplay();
-    }
-
-    function removePreviousUI() {
-        var previous = document.getElementById("chuni-random-picker");
-        var utility = document.getElementById("chuni-random-picker-utility");
-
-        if (previous) previous.remove();
-        if (utility) utility.remove();
-    }
-
-    function emptyData() {
+    function m(e, t, r) {
         return {
-            MASTER: [],
-            ULTIMA: []
+            min: E((e = e || {}).min) ? e.min : E(t) ? t : "",
+            max: E(e.max) ? e.max : E(r) ? r : ""
         };
     }
-
-    function loadData() {
-        try {
-            var json = localStorage.getItem(STORAGE_KEY);
-            return json ? JSON.parse(json) : emptyData();
-        } catch (error) {
-            return emptyData();
-        }
+    function h() {
+        localStorage.setItem(p, JSON.stringify(b.settings));
     }
-
-    function loadSettings() {
-        try {
-            var json = localStorage.getItem(SETTINGS_KEY);
-            var settings = json ? JSON.parse(json) : {};
-
-            return {
-                hideLocked: settings.hideLocked === true
-            };
-        } catch (error) {
-            return {
-                hideLocked: false
-            };
-        }
-    }
-
-    function saveSettings() {
-        localStorage.setItem(
-            SETTINGS_KEY,
-            JSON.stringify(App.settings)
-        );
-    }
-
-    function normalizeStoredData(data) {
-        var normalized = emptyData();
-
-        ["MASTER", "ULTIMA"].forEach(function (difficulty) {
-            var list = data && Array.isArray(data[difficulty])
-                ? data[difficulty]
-                : [];
-
-            normalized[difficulty] = list.map(function (song) {
-                if (typeof song === "string") {
-                    var legacyRequiresUnlock =
-                        isUnlockRequired(difficulty, song);
-
-                    return {
-                        name: song,
-                        genre: "不明",
-                        level: "不明",
-                        score: null,
-                        played: false,
-                        lamp: null,
-                        hasAJ: false,
-                        requiresUnlock: legacyRequiresUnlock,
-                        locked: legacyRequiresUnlock
-                    };
+    function y(e, t) {
+        var r = document.getElementById("chuni-random-picker-song-list");
+        r && r.remove();
+        var i = document.createElement("div");
+        i.id = "chuni-random-picker-song-list", i.style.cssText = "position:absolute;inset:0;z-index:10;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;box-sizing:border-box;padding:14px;border:2px solid rgba(255,255,255,.32);border-radius:12px;background:#171c23;color:#fff;box-shadow:0 10px 30px rgba(0,0,0,.65)", 
+        i.innerHTML = "<div style='position:sticky;top:-14px;z-index:3;margin:-14px -14px 0;padding:14px 14px 9px;background:#171c23;border-radius:12px 12px 0 0'><div style='position:relative;min-height:28px'><strong style='display:block;padding:3px 34px 0;font-size:15px;text-align:center'>" + J(t || "対象楽曲") + "</strong><button id='crp-song-list-close' type='button' aria-label='閉じる' style='position:absolute;top:0;right:0;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:#fff;color:#111;font-size:18px;line-height:1;cursor:pointer'>×</button></div><div style='margin-top:3px;font-size:11px;opacity:.75;text-align:center'>" + e.length + "曲 / カードをタップしてKEEP</div></div><div id='crp-song-list-content' style='margin-top:5px;padding-right:3px'></div>", 
+        b.ui.box.scrollTop = 0, b.ui.box.appendChild(i), function t() {
+            var r = i.scrollTop, n = i.querySelector("#crp-song-list-content");
+            n.innerHTML = e.map(function(e, t) {
+                var r = "MASTER" === e.difficulty ? "#9d20df" : "#111214", i = "MASTER" === e.difficulty ? "#b845ee" : "#ff3434", n = !!b.state.kept[H(e.difficulty, e.name)];
+                return "<div data-crp-song-list-index='" + t + "' role='button' tabindex='0' aria-pressed='" + n + "' style='box-sizing:border-box;background:" + (n ? "#f5c84c" : "#fff") + ";padding:5px;margin-top:8px;border:2px solid " + (n ? "#ffe680" : "transparent") + ";border-radius:7px;box-shadow:" + (n ? "0 0 0 2px #9b6b00,0 5px 14px rgba(0,0,0,.38)" : "0 4px 10px rgba(0,0,0,.24)") + ";cursor:pointer'><div style='display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px;align-items:center;min-height:29px;padding:4px 7px;box-sizing:border-box;background:#1d2b3a;color:#fff;overflow:hidden'><span style='white-space:nowrap;font-size:12px;font-weight:900;letter-spacing:.02em'>TRACK " + (t + 1) + "</span><div style='position:relative;min-width:0;overflow:hidden;box-sizing:border-box;min-height:22px;padding:2px 34px;border:1px solid " + i + ";border-radius:4px;background:" + r + ";font-size:11px;font-weight:900;text-align:center;line-height:1.35'>" + ("MASTER" === e.difficulty ? "" : "<span style='position:absolute;left:0;top:0;bottom:0;width:34px;background:linear-gradient(45deg,transparent 0 18%,#ff3151 19% 34%,#6f6870 35% 40%,#ff3151 41% 56%,transparent 57% 100%)'></span><span style='position:absolute;right:0;top:0;bottom:0;width:34px;background:linear-gradient(-45deg,transparent 0 18%,#ff3151 19% 34%,#6f6870 35% 40%,#ff3151 41% 56%,transparent 57% 100%)'></span>") + "<span style='position:relative;z-index:1;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>" + (n ? "KEEP / " : "") + J(e.difficulty) + " / " + J(e.genre || "不明") + "</span></div></div><div style='position:relative;display:flex;align-items:center;min-height:44px;box-sizing:border-box;padding:8px 48px 8px 12px;background:#faf9d9;color:#080808'><div style='min-width:0;width:100%;font-size:15px;font-weight:800;line-height:1.35;text-align:left;overflow-wrap:anywhere;word-break:break-word'>" + J(e.name) + "</div><span style='position:absolute;top:50%;right:0;transform:translateY(-50%);white-space:nowrap;padding:3px 7px;border:1px solid " + i + ";border-radius:5px;background:" + r + ";color:#fff;font-size:13px;font-weight:900'>" + J(e.level || "不明") + "</span></div></div>";
+            }).join(""), Array.from(n.querySelectorAll("[data-crp-song-list-index]")).forEach(function(r) {
+                function i() {
+                    var i = e[Number(r.getAttribute("data-crp-song-list-index"))], n = H(i.difficulty, i.name);
+                    b.state.kept[n] ? (delete b.state.kept[n], I("KEEPを解除しました：" + i.name)) : (b.state.kept[n] = i, 
+                    I("KEEPしました：" + i.name)), "function" == typeof b.state.renderResults && b.state.renderResults(), 
+                    t();
                 }
-
-                var name = song.name || "";
-                var requiresUnlock =
-                    isUnlockRequired(difficulty, name);
-                var played = typeof song.played === "boolean"
-                    ? song.played
-                    : typeof song.score === "number";
-
-                return {
-                    name: name,
-                    genre: song.genre || "不明",
-                    level: song.level || "不明",
-                    score: typeof song.score === "number"
-                        ? song.score
-                        : null,
-                    played: played,
-                    lamp: song.lamp || null,
-                    hasAJ: song.hasAJ === true ||
-                        song.lamp === "ALL_JUSTICE" ||
-                        song.lamp === "ALL_JUSTICE_CRITICAL",
-                    requiresUnlock: requiresUnlock,
-                    locked: requiresUnlock && !played
+                r.onclick = i, r.onkeydown = function(e) {
+                    "Enter" !== e.key && " " !== e.key || (e.preventDefault(), i());
                 };
-            }).filter(function (song) {
-                return song.name;
-            });
-        });
-
-        return normalized;
-    }
-
-    function saveData(data) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    }
-
-    function createUI() {
-        var box = document.createElement("div");
-        box.id = "chuni-random-picker";
-        box.style.cssText =
-            "position:fixed;top:10px;right:10px;width:min(360px," +
-            "calc(100vw - 20px));max-height:calc(100vh - 20px);" +
-            "overflow:auto;box-sizing:border-box;background:#171c23;" +
-            "color:#fff;padding:0;z-index:2147483646;border-radius:14px;" +
-            "border:2px solid #e7473d;box-shadow:0 10px 30px rgba(0,0,0,.55);" +
-            "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI'," +
-            "'Noto Sans JP',sans-serif;font-size:14px;line-height:1.5;";
-
-        box.innerHTML =
-            "<div id='crp-accent' style='height:6px;background:#e7473d'></div>" +
-            "<div style='padding:16px'>" +
-                "<div style='position:relative;min-height:25px'>" +
-                    "<div id='crp-title' style='min-width:0;padding:0 30px;" +
-                        "font-size:16px;font-weight:800;letter-spacing:.015em;" +
-                        "line-height:1.35;text-align:center;" +
-                        "overflow-wrap:anywhere'></div>" +
-                    "<button id='crp-close' type='button' title='閉じる' " +
-                        "style='position:absolute;top:0;right:0;width:26px;" +
-                        "height:26px;padding:0;border:0;background:transparent;" +
-                        "color:#fff;font-size:19px;line-height:1;cursor:pointer'>×</button>" +
-                "</div>" +
-                "<div id='crp-status' style='margin-top:12px;padding:10px 12px;" +
-                    "background:rgba(0,0,0,.25);border-radius:9px'></div>" +
-                "<div id='crp-message' style='min-height:21px;margin-top:8px;" +
-                    "font-size:12px;color:#d7dce3'></div>" +
-                "<div style='display:flex;gap:8px;margin-top:10px'>" +
-                    "<button id='crp-update' type='button' " +
-                        "style='flex:1;padding:9px;border:0;border-radius:8px;" +
-                        "font-weight:700;cursor:pointer'>一括更新</button>" +
-                    "<button id='crp-utility' type='button' " +
-                        "style='padding:9px 12px;border:1px solid #687383;" +
-                        "border-radius:8px;background:#252d38;color:#fff;" +
-                        "cursor:pointer'>Utility</button>" +
-                "</div>" +
-                "<select id='crp-difficulty' style='width:100%;height:40px;" +
-                    "margin-top:12px;border:1px solid #687383;border-radius:8px;" +
-                    "background:#252d38;color:#fff;padding:0 10px;font-size:14px'>" +
-                    "<option value='BOTH'>MASTER + ULTIMA</option>" +
-                    "<option value='MASTER'>MASTERのみ</option>" +
-                    "<option value='ULTIMA'>ULTIMAのみ</option>" +
-                "</select>" +
-                "<div style='display:flex;gap:8px;align-items:center;margin-top:10px'>" +
-                    "<label for='crp-count' style='white-space:nowrap'>曲数</label>" +
-                    "<input id='crp-count' inputmode='numeric' value='3' " +
-                        "style='width:60px;height:38px;box-sizing:border-box;" +
-                        "border:1px solid #687383;border-radius:8px;" +
-                        "background:#252d38;color:#fff;padding:0 8px'>" +
-                    "<button id='crp-pick' type='button' " +
-                        "style='flex:1;height:38px;border:0;border-radius:8px;" +
-                        "font-weight:800;cursor:pointer'>抽選</button>" +
-                "</div>" +
-                "<div id='crp-result' style='margin-top:12px'></div>" +
-            "</div>";
-
-        document.body.appendChild(box);
-
-        App.ui.box = box;
-        App.ui.title = box.querySelector("#crp-title");
-        App.ui.accent = box.querySelector("#crp-accent");
-        App.ui.status = box.querySelector("#crp-status");
-        App.ui.message = box.querySelector("#crp-message");
-        App.ui.update = box.querySelector("#crp-update");
-        App.ui.utility = box.querySelector("#crp-utility");
-        App.ui.pick = box.querySelector("#crp-pick");
-        App.ui.result = box.querySelector("#crp-result");
-        App.ui.difficulty = box.querySelector("#crp-difficulty");
-        App.ui.count = box.querySelector("#crp-count");
-        App.ui.close = box.querySelector("#crp-close");
-
-        box.querySelector("#crp-close").onclick = function () {
-            box.remove();
-        };
-
-        box.querySelector("#crp-utility").onclick = createUtilityUI;
-
-        App.ui.difficulty.onchange = function () {
-            App.state.difficulty = this.value;
-            updateDisplay();
-        };
-
-        App.ui.pick.onclick = function () {
-            var count = Number(App.ui.count.value) || 3;
-            drawCards(pickRandom(count));
-        };
-
-        App.ui.update.onclick = updateAll;
-    }
-
-    function createUtilityUI() {
-        var previous = document.getElementById(
-            "chuni-random-picker-utility"
-        );
-        if (previous) previous.remove();
-
-        var utility = document.createElement("div");
-        utility.id = "chuni-random-picker-utility";
-        utility.style.cssText =
-            "position:fixed;top:16px;right:16px;width:min(330px," +
-            "calc(100vw - 32px));box-sizing:border-box;background:#171c23;" +
-            "color:#fff;padding:16px;z-index:2147483647;border-radius:14px;" +
-            "border:2px solid #8b96a6;box-shadow:0 10px 30px rgba(0,0,0,.55);" +
-            "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI'," +
-            "'Noto Sans JP',sans-serif;font-size:14px;";
-
-        utility.innerHTML =
-            "<div style='font-size:17px;font-weight:800'>Utility</div>" +
-            "<div style='margin-top:12px'>MASTER: " +
-                App.data.MASTER.length + "曲<br>ULTIMA: " +
-                App.data.ULTIMA.length + "曲</div>" +
-            "<label style='display:flex;gap:8px;align-items:flex-start;" +
-                "margin-top:14px;padding:10px;background:rgba(0,0,0,.2);" +
-                "border-radius:8px;cursor:pointer'>" +
-                "<input id='crp-hide-locked' type='checkbox' " +
-                    (App.settings.hideLocked ? "checked" : "") + ">" +
-                "<span>解禁が必要な曲を抽選から除外</span>" +
-            "</label>" +
-            "<div style='display:flex;gap:8px;margin-top:16px'>" +
-                "<button id='crp-delete' type='button' style='flex:1;" +
-                    "padding:9px;border:1px solid #dc5b5b;border-radius:8px;" +
-                    "background:#3a2024;color:#fff'>データ削除</button>" +
-                "<button id='crp-util-close' type='button' style='flex:1;" +
-                    "padding:9px;border:1px solid #687383;border-radius:8px;" +
-                    "background:#252d38;color:#fff'>閉じる</button>" +
-            "</div>";
-
-        document.body.appendChild(utility);
-
-        utility.querySelector("#crp-util-close").onclick = function () {
-            utility.remove();
-        };
-
-        utility.querySelector("#crp-hide-locked").onchange = function () {
-            App.settings.hideLocked = this.checked;
-            saveSettings();
-            refreshMode();
-            updateDisplay();
-            App.ui.result.innerHTML = "";
-            setMessage(
-                this.checked
-                    ? "解禁が必要な曲を抽選対象から除外しました"
-                    : "解禁が必要な曲を抽選対象へ戻しました"
-            );
-        };
-
-        utility.querySelector("#crp-delete").onclick = function () {
-            if (!window.confirm("保存データを削除しますか？")) return;
-            localStorage.removeItem(STORAGE_KEY);
-            App.data = emptyData();
-            refreshMode();
-            updateDisplay();
-            utility.remove();
-            setMessage("保存データを削除しました");
+            }), i.scrollTop = r;
+        }(), i.querySelector("#crp-song-list-close").onclick = function() {
+            i.remove();
         };
     }
-
-    function refreshMode() {
-        var all = flattenSongs().filter(function (song) {
-            return !App.settings.hideLocked || !song.locked;
-        });
-        var unplayed = all.filter(function (song) {
-            return !song.played;
-        });
-        var belowSSS = all.filter(function (song) {
-            return song.played && song.score < SSS_SCORE;
-        });
-        var withoutAJ = all.filter(function (song) {
-            return !song.hasAJ;
-        });
-
-        if (unplayed.length > 0 || all.length === 0) {
-            App.state.mode = "UNPLAYED";
-            App.state.candidates = unplayed;
-        } else if (belowSSS.length > 0) {
-            App.state.mode = "SSS_CHALLENGE";
-            App.state.candidates = belowSSS;
-        } else if (withoutAJ.length > 0) {
-            App.state.mode = "AJ_CHALLENGE";
-            App.state.candidates = withoutAJ;
-        } else {
-            App.state.mode = "ALL_TRACKS";
-            App.state.candidates = all;
-        }
-    }
-
-    function flattenSongs() {
-        var result = [];
-
-        ["MASTER", "ULTIMA"].forEach(function (difficulty) {
-            App.data[difficulty].forEach(function (song) {
-                result.push({
-                    difficulty: difficulty,
-                    name: song.name,
-                    genre: song.genre,
-                    level: song.level,
-                    score: song.score,
-                    played: song.played,
-                    lamp: song.lamp,
-                    hasAJ: song.hasAJ,
-                    requiresUnlock: song.requiresUnlock === true,
-                    locked: song.locked === true
+    function v() {
+        var e, t = (e = [], [ "MASTER", "ULTIMA" ].forEach(function(t) {
+            b.data[t].forEach(function(r) {
+                e.push({
+                    difficulty: t,
+                    name: r.name,
+                    genre: r.genre,
+                    level: r.level,
+                    score: r.score,
+                    played: r.played,
+                    lamp: r.lamp,
+                    hasAJ: r.hasAJ,
+                    requiresUnlock: !0 === r.requiresUnlock,
+                    locked: !0 === r.locked
                 });
             });
+        }), e).filter(function(e) {
+            return !b.settings.hideLocked || !e.locked;
+        }), r = t.filter(function(e) {
+            return !e.played;
+        }), i = t.filter(function(e) {
+            return e.played && e.score < 1007500;
+        }), n = t.filter(function(e) {
+            return !e.hasAJ;
         });
-
-        return result;
+        r.length > 0 || 0 === t.length ? S("UNPLAYED", r) : i.length > 0 ? S("SSS_CHALLENGE", i) : n.length > 0 ? S("AJ_CHALLENGE", n) : S("ALL_TRACKS", t);
     }
-
-    function candidatesForDifficulty() {
-        var difficulty = App.state.difficulty;
-
-        return App.state.candidates.filter(function (song) {
-            return difficulty === "BOTH" ||
-                song.difficulty === difficulty;
-        });
+    function S(e, t) {
+        var r = b.settings.lastMode !== e;
+        b.state.mode = e, b.state.candidates = t, r && b.settings.levelRanges[e] && (b.settings.levelRanges[e] = {
+            min: "",
+            max: f
+        }), r && (b.settings.lastMode = e, h());
     }
-
-    function updateDisplay() {
-        if (!App.ui.box) return;
-
-        var definition = MODE_DEFINITIONS[App.state.mode];
-        var theme = definition.theme;
-        var masterCount = App.state.candidates.filter(function (song) {
-            return song.difficulty === "MASTER";
-        }).length;
-        var ultimaCount = App.state.candidates.filter(function (song) {
-            return song.difficulty === "ULTIMA";
-        }).length;
-        var lockedCount = App.state.candidates.filter(function (song) {
-            return song.locked;
-        }).length;
-
-        App.ui.title.textContent = definition.title;
-        App.ui.box.style.borderColor = theme.accentDark;
-        App.ui.box.style.background = theme.panel;
-        App.ui.box.style.color = theme.text;
-        App.ui.accent.style.background = theme.accent;
-        App.ui.title.style.color = theme.text;
-        App.ui.close.style.color = theme.text;
-        App.ui.status.style.background =
-            theme.surface || "rgba(0,0,0,.25)";
-        App.ui.status.style.color = theme.text;
-        App.ui.message.style.color = theme.muted || "#d7dce3";
-
-        [App.ui.update, App.ui.pick].forEach(function (button) {
-            button.style.background =
-                theme.buttonBackground || theme.accent;
-            button.style.color = theme.buttonText;
-            button.style.borderStyle = "solid";
-            button.style.borderWidth = "1px";
-            button.style.borderColor =
-                theme.buttonBorder || "transparent";
-        });
-
-        [App.ui.utility, App.ui.difficulty, App.ui.count]
-            .forEach(function (control) {
-                control.style.background = theme.control || "#252d38";
-                control.style.color = theme.text;
-                control.style.borderColor = theme.accentDark;
-            });
-
-        App.ui.status.innerHTML =
-            "<div style='font-size:12px;opacity:.8'>" +
-                escapeHTML(definition.label) + "対象</div>" +
-            "<div style='display:grid;grid-template-columns:1fr auto;" +
-                "gap:2px 14px;margin:4px auto 0;max-width:180px;" +
-                "font-variant-numeric:tabular-nums'>" +
-                "<span>MASTER</span><strong>" + masterCount + "曲</strong>" +
-                "<span>ULTIMA</span><strong>" + ultimaCount + "曲</strong>" +
-                "<span>合計</span><strong>" +
-                    (masterCount + ultimaCount) + "曲</strong>" +
-                (lockedCount > 0
-                    ? "<span>🔒 解禁要</span><strong>" +
-                        lockedCount + "曲</strong>"
-                    : "") +
-            "</div>";
-
-        App.ui.update.disabled = App.state.busy;
-        App.ui.pick.disabled = App.state.busy;
-        App.ui.update.style.opacity = App.state.busy ? ".55" : "1";
-        App.ui.pick.style.opacity = App.state.busy ? ".55" : "1";
+    function A(e) {
+        var t = "<option value=''" + ("" === e ? " selected" : "") + ">指定なし</option>";
+        return u.forEach(function(r) {
+            t += "<option value='" + r + "'" + (e === r ? " selected" : "") + ">" + r + "</option>";
+        }), t;
     }
-
-    function setMessage(message) {
-        if (App.ui.message) {
-            App.ui.message.textContent = message || "";
+    function E(e) {
+        return "string" == typeof e && -1 !== u.indexOf(e);
+    }
+    function T(e) {
+        return u.indexOf(e);
+    }
+    function M() {
+        return b.settings.levelRanges[b.state.mode] || {
+            min: "",
+            max: ""
+        };
+    }
+    function L(e) {
+        var t = M(), r = t.min, i = t.max;
+        r && i && T(r) > T(i) && ("min" === e ? (t.max = r, b.ui.maxLevel.value = r) : (t.min = i, 
+        b.ui.minLevel.value = i));
+    }
+    function w(e) {
+        if ("UNPLAYED" === b.state.mode) return !0;
+        var t = M(), r = T(e.level);
+        return -1 === r ? !t.min && !t.max : !(t.min && r < T(t.min) || t.max && r > T(t.max));
+    }
+    function R() {
+        return b.state.candidates.filter(w);
+    }
+    function k(e, t, r, i) {
+        var n = T(r), o = document.createDocumentFragment();
+        if (i) {
+            var a = document.createElement("option");
+            a.value = "", a.textContent = "指定なし", o.appendChild(a);
         }
-    }
-
-    function setBusy(busy) {
-        App.state.busy = busy;
-        updateDisplay();
-    }
-
-    function pickRandom(count) {
-        var pool = candidatesForDifficulty().slice();
-        var result = [];
-
-        while (result.length < count && pool.length > 0) {
-            var index = Math.floor(Math.random() * pool.length);
-            result.push(pool.splice(index, 1)[0]);
-        }
-
-        if (result.length === 0) {
-            setMessage("選択中の難易度に抽選対象曲がありません");
-        } else {
-            setMessage("");
-        }
-
-        return result;
-    }
-
-    function drawCards(list) {
-        if (!list.length) {
-            App.ui.result.innerHTML = "";
-            return;
-        }
-
-        App.ui.result.innerHTML = list.map(function (song, index) {
-            var isMaster = song.difficulty === "MASTER";
-            var difficultyBackground = isMaster
-                ? "#9d20df"
-                : "#111214";
-            var difficultyBorder = isMaster
-                ? "#b845ee"
-                : "#30343a";
-            var ultimaStripeLeft =
-                "linear-gradient(45deg,transparent 0 18%," +
-                "#ff3151 19% 34%,#6f6870 35% 40%," +
-                "#ff3151 41% 56%,transparent 57% 100%)";
-            var ultimaStripeRight =
-                "linear-gradient(-45deg,transparent 0 18%," +
-                "#ff3151 19% 34%,#6f6870 35% 40%," +
-                "#ff3151 41% 56%,transparent 57% 100%)";
-
-            return (
-                "<div style='box-sizing:border-box;background:#fff;" +
-                    "padding:5px;margin-top:9px;border-radius:7px;" +
-                    "box-shadow:0 4px 10px rgba(0,0,0,.24)'>" +
-                    "<div style='display:grid;grid-template-columns:auto " +
-                        "minmax(0,1fr);gap:7px;align-items:center;" +
-                        "min-height:29px;box-sizing:border-box;padding:4px 7px;" +
-                        "background:#1d2b3a;color:#fff;overflow:hidden'>" +
-                        "<span style='white-space:nowrap;font-size:12px;" +
-                            "font-weight:900;letter-spacing:.02em'>" +
-                            "TRACK " + (index + 1) + "</span>" +
-                        "<div style='position:relative;min-width:0;overflow:hidden;" +
-                            "box-sizing:border-box;background:" +
-                            difficultyBackground + ";border:1px solid " +
-                            difficultyBorder + ";min-height:22px;" +
-                            "padding:2px 34px;border-radius:4px;" +
-                            "font-size:11px;font-weight:900;text-align:center;" +
-                            "line-height:1.35;box-shadow:inset 0 -1px 0 " +
-                            "rgba(0,0,0,.2)'>" +
-                            (!isMaster
-                                ? "<span style='position:absolute;left:0;top:0;" +
-                                    "bottom:0;width:34px;background:" +
-                                    ultimaStripeLeft + "'></span>" +
-                                  "<span style='position:absolute;right:0;top:0;" +
-                                    "bottom:0;width:34px;background:" +
-                                    ultimaStripeRight + "'></span>"
-                                : "") +
-                            "<span style='position:relative;z-index:1;" +
-                                "overflow-wrap:anywhere;word-break:break-word'>" +
-                                escapeHTML(song.difficulty) + " / " +
-                                escapeHTML(song.genre || "不明") +
-                            "</span>" +
-                            (song.locked
-                                ? "<span title='解禁が必要な可能性があります' " +
-                                    "aria-label='解禁が必要な可能性があります' " +
-                                    "style='position:absolute;top:50%;right:5px;" +
-                                    "transform:translateY(-50%);white-space:nowrap;" +
-                                    "z-index:2;background:rgba(0,0,0,.55);" +
-                                    "padding:1px 4px;border-radius:4px;" +
-                                    "font-size:11px'>🔒</span>"
-                                : "") +
-                        "</div>" +
-                    "</div>" +
-                    "<div style='position:relative;display:flex;align-items:center;" +
-                        "justify-content:flex-start;min-height:44px;" +
-                        "background:#faf9d9;color:#080808;" +
-                        "padding:8px 48px 8px 12px;box-sizing:border-box'>" +
-                        "<div style='min-width:0;width:100%;font-size:16px;" +
-                            "font-weight:800;line-height:1.35;text-align:left;" +
-                            "overflow-wrap:anywhere;word-break:break-word'>" +
-                            escapeHTML(song.name) + "</div>" +
-                        "<span style='position:absolute;top:50%;right:0;" +
-                            "transform:translateY(-50%);white-space:nowrap;" +
-                            "background:" + difficultyBackground + ";" +
-                            "border:1px solid " + difficultyBorder + ";" +
-                            "color:#fff;padding:3px 7px;border-radius:5px;" +
-                            "font-size:13px;font-weight:900'>" +
-                            escapeHTML(song.level || "不明") + "</span>" +
-                    "</div>" +
-                "</div>"
-            );
-        }).join("");
-    }
-
-    function updateAll() {
-        if (App.state.busy) return;
-
-        setBusy(true);
-        setMessage("取得準備中…");
-
-        Promise.all([
-            fetchAllSongs(),
-            fetchLevelMap()
-        ]).then(function (result) {
-            var freshData = result[0];
-            var levelMap = result[1];
-
-            ["MASTER", "ULTIMA"].forEach(function (difficulty) {
-                freshData[difficulty].forEach(function (song) {
-                    var key = songKey(difficulty, song.name);
-                    song.level = levelMap[key] || "不明";
-                });
-            });
-
-            saveData(freshData);
-            App.data = freshData;
-            refreshMode();
-            App.ui.result.innerHTML = "";
-            setMessage(
-                "更新完了：MASTER " + freshData.MASTER.length +
-                "曲 / ULTIMA " + freshData.ULTIMA.length + "曲"
-            );
-        }).catch(function (error) {
-            console.error("[CHUNITHM Random Picker]", error);
-            setMessage(
-                "取得に失敗しました。CHUNITHM-NETへのログイン状態を" +
-                "確認してください。既存データは保持されています。"
-            );
-        }).then(function () {
-            setBusy(false);
-        });
-    }
-
-    function fetchAllSongs() {
-        setMessage("楽曲一覧の入口を取得中…");
-
-        return fetchHTML(GENRE_ENTRY_URL).then(function (entry) {
-            assertNotErrorPage(entry);
-
-            var select = entry.doc.querySelector("select[name='genre']");
-            var form = select && select.closest("form");
-
-            if (!form) {
-                throw new Error("ジャンル検索フォームが見つかりません");
+        u.forEach(function(e) {
+            if (!(r && T(e) < n)) {
+                var t = document.createElement("option");
+                t.value = e, t.textContent = e, o.appendChild(t);
             }
-
-            var params = formParameters(form);
-            params.set("genre", "99");
-
-            setMessage("MASTERを取得中…");
-
-            return postHTML(
-                "/chuni-mobile/html/mobile/record/musicGenre/sendMaster",
-                params
-            ).then(function (master) {
-                assertNotErrorPage(master);
-                setMessage("ULTIMAを取得中…");
-
-                return postHTML(
-                    "/chuni-mobile/html/mobile/record/musicGenre/sendUltima",
-                    params
-                ).then(function (ultima) {
-                    assertNotErrorPage(ultima);
-
-                    return {
-                        MASTER: parseMusicList(master.doc, "MASTER"),
-                        ULTIMA: parseMusicList(ultima.doc, "ULTIMA")
-                    };
-                });
-            });
-        });
+        }), e.replaceChildren(o), e.value = t;
     }
-
-    function parseMusicList(doc, difficulty) {
-        var songs = [];
-        var genre = "不明";
-
-        Array.from(
-            doc.querySelectorAll(".genre,.musiclist_box")
-        ).forEach(function (element) {
-            if (element.classList.contains("genre")) {
-                genre = element.textContent.trim() || "不明";
-                return;
-            }
-
-            var title = element.querySelector(".music_title");
-            if (!title) return;
-
-            var scoreElement =
-                element.querySelector(".play_musicdata_highscore");
-            var score = scoreElement
-                ? parseScore(scoreElement.textContent)
-                : null;
-            var lamp = parseLamp(element);
-            var name = title.textContent.trim();
-            var played = score !== null;
-            var requiresUnlock =
-                isUnlockRequired(difficulty, name);
-
-            songs.push({
-                name: name,
-                genre: genre,
-                level: "不明",
-                score: score,
-                played: played,
-                lamp: lamp,
-                hasAJ: lamp === "ALL_JUSTICE" ||
-                    lamp === "ALL_JUSTICE_CRITICAL",
-                requiresUnlock: requiresUnlock,
-                locked: requiresUnlock && !played
-            });
-        });
-
-        if (songs.length === 0) {
-            throw new Error(difficulty + "の楽曲が取得できませんでした");
+    function C() {
+        if (b.ui.box) {
+            var e = x[b.state.mode], t = e.theme;
+            s = "SSS_CHALLENGE" === b.state.mode || "AJ_CHALLENGE" === b.state.mode, c = M(), 
+            p = s ? 0 === (d = b.state.candidates.map(function(e) {
+                return T(e.level);
+            }).filter(function(e) {
+                return e >= 0;
+            })).length ? "" : u[Math.min.apply(null, d)] : "", f = T(p), g = !1, s && p && ((!c.min || T(c.min) < f) && (c.min = p, 
+            b.ui.minLevel.value = p, g = !0), c.max && T(c.max) < f && (c.max = p, b.ui.maxLevel.value = p, 
+            g = !0)), k(b.ui.minLevel, c.min, p, !s || !p), k(b.ui.maxLevel, c.max, p, !0), 
+            g && h();
+            var r = M(), i = R(), n = i.filter(function(e) {
+                return "MASTER" === e.difficulty;
+            }).length, o = i.filter(function(e) {
+                return "ULTIMA" === e.difficulty;
+            }).length, a = i.filter(function(e) {
+                return e.locked;
+            }).length;
+            b.ui.title.textContent = e.title, b.ui.box.style.borderColor = t.accentDark, b.ui.box.style.background = t.panel, 
+            b.ui.box.style.color = t.text, b.ui.accent.style.background = t.accent, b.ui.title.style.color = t.text, 
+            b.ui.close.style.color = t.text, b.ui.status.style.background = t.surface || "rgba(0,0,0,.25)", 
+            b.ui.status.style.color = t.text, b.ui.message.style.color = t.muted || "#d7dce3", 
+            [ b.ui.update, b.ui.pick ].forEach(function(e) {
+                e.style.background = t.buttonBackground || t.accent, e.style.color = t.buttonText, 
+                e.style.borderStyle = "solid", e.style.borderWidth = "1px", e.style.borderColor = t.buttonBorder || "transparent";
+            }), [ b.ui.utility, b.ui.difficulty, b.ui.minLevel, b.ui.maxLevel, b.ui.count ].forEach(function(e) {
+                e.style.background = t.control || "#252d38", e.style.color = t.text, e.style.borderColor = t.accentDark;
+            }), b.ui.levelFilter.style.display = "UNPLAYED" === b.state.mode ? "none" : "block", 
+            b.ui.levelFilter.style.borderColor = t.accentDark, b.ui.levelFilter.style.background = t.surface || "rgba(0,0,0,.16)", 
+            b.ui.levelFilterSummary.textContent = r.min || r.max ? "レベル範囲：" + (r.min || "指定なし") + "以上 / " + (r.max || "指定なし") + "以下" : "レベル範囲を指定", 
+            b.ui.status.innerHTML = "<div style='font-size:12px;font-weight:700;opacity:.8;text-align:center'>" + J(e.label) + "対象</div><div style='display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:7px;font-variant-numeric:tabular-nums'><button id='crp-show-master' type='button' style='min-width:0;padding:5px;border:0;border-radius:7px;background:rgba(127,127,127,.12);color:inherit;font:inherit;text-align:center;cursor:pointer'><div style='padding:2px 4px;border:1px solid #b845ee;border-radius:4px;background:#9d20df;color:#fff;font-size:10px;font-weight:900;line-height:1.2'>MASTER</div><strong style='display:block;margin-top:3px;font-size:16px;line-height:1.2'>" + n + "<small style='font-size:10px'>曲</small></strong></button><button id='crp-show-ultima' type='button' style='min-width:0;padding:5px;border:0;border-radius:7px;background:rgba(127,127,127,.12);color:inherit;font:inherit;text-align:center;cursor:pointer'><div style='padding:2px 4px;border:1px solid #ff3434;border-radius:4px;background:#111214;color:#fff;font-size:10px;font-weight:900;line-height:1.2'>ULTIMA</div><strong style='display:block;margin-top:3px;font-size:16px;line-height:1.2'>" + o + "<small style='font-size:10px'>曲</small></strong></button><button id='crp-show-total' type='button' style='min-width:0;padding:5px;border:0;border-radius:7px;background:rgba(127,127,127,.12);color:inherit;font:inherit;text-align:center;cursor:pointer'><div style='padding:2px 4px;border:1px solid rgba(127,127,127,.45);border-radius:4px;font-size:10px;font-weight:900;line-height:1.2'>合計</div><strong style='display:block;margin-top:3px;font-size:16px;line-height:1.2'>" + (n + o) + "<small style='font-size:10px'>曲</small></strong></button></div>" + (a > 0 ? "<button id='crp-show-locked' type='button' style='display:block;width:100%;box-sizing:border-box;margin:7px 0 0;padding:6px 10px;border:1px solid rgba(127,127,127,.45);border-radius:6px;background:rgba(127,127,127,.12);color:inherit;font-size:11px;font-weight:700;cursor:pointer'>🔒 未解禁 <strong>" + a + "曲</strong>　一覧を見る</button>" : "");
+            var l = b.ui.status.querySelector("#crp-show-locked");
+            l && (l.onclick = function() {
+                y(i.filter(function(e) {
+                    return e.locked;
+                }), "未解禁楽曲");
+            }), [ {
+                id: "#crp-show-master",
+                title: "MASTER 対象楽曲",
+                songs: i.filter(function(e) {
+                    return "MASTER" === e.difficulty;
+                })
+            }, {
+                id: "#crp-show-ultima",
+                title: "ULTIMA 対象楽曲",
+                songs: i.filter(function(e) {
+                    return "ULTIMA" === e.difficulty;
+                })
+            }, {
+                id: "#crp-show-total",
+                title: "対象楽曲",
+                songs: i
+            } ].forEach(function(e) {
+                var t = b.ui.status.querySelector(e.id);
+                t.onclick = function() {
+                    y(e.songs, e.title);
+                }, t.onmouseenter = function() {
+                    this.style.background = "rgba(127,127,127,.24)";
+                }, t.onmouseleave = function() {
+                    this.style.background = "rgba(127,127,127,.12)";
+                };
+            }), b.ui.update.disabled = b.state.busy, b.ui.pick.disabled = b.state.busy, b.ui.update.style.opacity = b.state.busy ? ".55" : "1", 
+            b.ui.pick.style.opacity = b.state.busy ? ".55" : "1";
         }
-
-        return songs;
+        var d, s, c, p, f, g;
     }
-
-    function parseScore(text) {
-        var match = String(text).match(/([0-9][0-9,]*)/);
-        if (!match) return null;
-
-        var score = Number(match[1].replace(/,/g, ""));
-        return isFinite(score) ? score : null;
+    function I(e) {
+        b.ui.message && (b.ui.message.textContent = e || "");
     }
-
-    function parseLamp(element) {
-        var files = Array.from(element.querySelectorAll("img"))
-            .map(function (image) {
-                return image.src.split("/").pop().split("?")[0];
-            });
-
-        if (files.indexOf("icon_alljusticecritical.png") !== -1) {
-            return "ALL_JUSTICE_CRITICAL";
-        }
-        if (files.indexOf("icon_alljustice.png") !== -1) {
-            return "ALL_JUSTICE";
-        }
-        if (files.indexOf("icon_fullcombo.png") !== -1) {
-            return "FULL_COMBO";
-        }
-        if (files.indexOf("icon_clear.png") !== -1) {
-            return "CLEAR";
-        }
-
-        return null;
+    function _(e) {
+        b.state.busy = e, C();
     }
-
-    function fetchLevelMap() {
-        setMessage("レベル検索フォームを取得中…");
-
-        return fetchHTML(LEVEL_ENTRY_URL).then(function (entry) {
-            assertNotErrorPage(entry);
-
-            var select = entry.doc.querySelector("select[name='level']");
-            var form = select && select.closest("form");
-
-            if (!form) {
-                throw new Error("レベル検索フォームが見つかりません");
-            }
-
-            var levels = Array.from(select.options)
-                .map(function (option) {
-                    return {
-                        value: option.value,
-                        label: option.textContent
-                            .replace(/^LEVEL\s*/i, "")
-                            .trim()
-                    };
-                }).filter(function (level) {
-                    return Number(level.value) >= MIN_LEVEL_VALUE;
-                });
-
-            var params = formParameters(form);
-            var action = form.action ||
-                "/chuni-mobile/html/mobile/record/musicLevel/sendSearch/";
-            var map = {};
-            var index = 0;
-
-            function next() {
-                if (index >= levels.length) {
-                    return Promise.resolve(map);
-                }
-
-                var level = levels[index++];
-                var currentParams = new URLSearchParams(params.toString());
-                currentParams.set("level", level.value);
-                setMessage(
-                    "レベル " + level.label + " を取得中（" +
-                    index + "/" + levels.length + "）"
-                );
-
-                return postHTML(action, currentParams)
-                    .then(function (result) {
-                        assertNotErrorPage(result);
-                        collectLevels(result.doc, level.label, map);
-                        return next();
+    function U(e, t) {
+        var r = [], i = "不明";
+        if (Array.from(e.querySelectorAll(".genre,.musiclist_box")).forEach(function(e) {
+            if (e.classList.contains("genre")) i = e.textContent.trim() || "不明"; else {
+                var n = e.querySelector(".music_title");
+                if (n) {
+                    var o = e.querySelector(".play_musicdata_highscore"), a = o ? function(e) {
+                        var t = String(e).match(/([0-9][0-9,]*)/);
+                        if (!t) return null;
+                        var r = Number(t[1].replace(/,/g, ""));
+                        return isFinite(r) ? r : null;
+                    }(o.textContent) : null, l = function(e) {
+                        var t = Array.from(e.querySelectorAll("img")).map(function(e) {
+                            return e.src.split("/").pop().split("?")[0];
+                        });
+                        return -1 !== t.indexOf("icon_alljusticecritical.png") ? "ALL_JUSTICE_CRITICAL" : -1 !== t.indexOf("icon_alljustice.png") ? "ALL_JUSTICE" : -1 !== t.indexOf("icon_fullcombo.png") ? "FULL_COMBO" : -1 !== t.indexOf("icon_clear.png") ? "CLEAR" : null;
+                    }(e), d = n.textContent.trim(), s = null !== a, c = z(t, d);
+                    r.push({
+                        name: d,
+                        genre: i,
+                        level: "不明",
+                        score: a,
+                        played: s,
+                        lamp: l,
+                        hasAJ: "ALL_JUSTICE" === l || "ALL_JUSTICE_CRITICAL" === l,
+                        requiresUnlock: c,
+                        locked: c && !s
                     });
+                }
             }
-
-            return next();
+        }), 0 === r.length) throw new Error(t + "の楽曲が取得できませんでした");
+        return r;
+    }
+    function H(e, t) {
+        return e + "\0" + String(t).replace(/\s+/g, " ").trim();
+    }
+    function z(e, t) {
+        var r = H(e, t);
+        return g.some(function(e) {
+            return H(e[1], e[0]) === r;
         });
     }
-
-    function collectLevels(doc, level, map) {
-        Array.from(doc.querySelectorAll(".musiclist_box"))
-            .forEach(function (box) {
-                var difficulty = null;
-                var container =
-                    box.closest("form") || box.parentElement || box;
-
-                if (
-                    box.classList.contains("bg_master") ||
-                    container.querySelector(".bg_master")
-                ) {
-                    difficulty = "MASTER";
-                } else if (
-                    box.classList.contains("bg_ultima") ||
-                    container.querySelector(".bg_ultima")
-                ) {
-                    difficulty = "ULTIMA";
-                }
-
-                if (!difficulty) return; // EXPERTなどは除外
-
-                var title = box.querySelector(".music_title");
-                if (!title) return;
-
-                map[songKey(difficulty, title.textContent)] = level;
-            });
+    function N(e) {
+        var t = new URLSearchParams;
+        return Array.from(e.querySelectorAll("input,select")).forEach(function(e) {
+            e.name && t.set(e.name, e.value);
+        }), t;
     }
-
-    function songKey(difficulty, title) {
-        return difficulty + "\u0000" +
-            String(title).replace(/\s+/g, " ").trim();
-    }
-
-    function isUnlockRequired(difficulty, title) {
-        var key = songKey(difficulty, title);
-
-        return UNLOCK_REQUIRED_CHARTS.some(function (entry) {
-            return songKey(entry[1], entry[0]) === key;
-        });
-    }
-
-    function formParameters(form) {
-        var params = new URLSearchParams();
-
-        Array.from(form.querySelectorAll("input,select"))
-            .forEach(function (element) {
-                if (element.name) {
-                    params.set(element.name, element.value);
-                }
-            });
-
-        return params;
-    }
-
-    function fetchHTML(url) {
-        return fetch(url, {
+    function O(e) {
+        return fetch(e, {
             credentials: "same-origin"
-        }).then(readHTMLResponse);
+        }).then(P);
     }
-
-    function postHTML(url, params) {
-        return fetch(url, {
+    function q(e, t) {
+        return fetch(e, {
             method: "POST",
             credentials: "same-origin",
             headers: {
-                "Content-Type":
-                    "application/x-www-form-urlencoded;charset=UTF-8"
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
             },
-            body: params.toString()
-        }).then(readHTMLResponse);
+            body: t.toString()
+        }).then(P);
     }
-
-    function readHTMLResponse(response) {
-        return response.text().then(function (html) {
+    function P(e) {
+        return e.text().then(function(t) {
             return {
-                response: response,
-                html: html,
-                doc: new DOMParser().parseFromString(html, "text/html")
+                response: e,
+                html: t,
+                doc: (new DOMParser).parseFromString(t, "text/html")
             };
         });
     }
-
-    function assertNotErrorPage(result) {
-        var text = result.doc.body
-            ? result.doc.body.textContent
-            : "";
-        var isError = /Error Code:|不正なアクセスです/.test(text);
-
-        if (!result.response.ok || isError) {
-            throw new Error(
-                "CHUNITHM-NET error: " +
-                result.response.status + " " +
-                result.response.url
-            );
+    function B(e) {
+        var t = e.doc.body ? e.doc.body.textContent : "", r = /Error Code:|不正なアクセスです/.test(t);
+        if (!e.response.ok || r) throw new Error("CHUNITHM-NET error: " + e.response.status + " " + e.response.url);
+    }
+    function J(e) {
+        return String(null == e ? "" : e).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+    e = document.getElementById("chuni-random-picker"), t = document.getElementById("chuni-random-picker-utility"), 
+    window.CHUNITHM_PICKER_SCROLL_LOCK && "function" == typeof window.CHUNITHM_PICKER_SCROLL_LOCK.restore && window.CHUNITHM_PICKER_SCROLL_LOCK.restore(), 
+    e && e.remove(), t && t.remove(), b.settings = function() {
+        try {
+            var e = localStorage.getItem(p), t = e ? JSON.parse(e) : {}, r = t.levelRanges || {}, i = {
+                hideLocked: !0 === t.hideLocked,
+                resultOrder: [ "ASC", "DESC", "RANDOM" ].indexOf(t.resultOrder) >= 0 ? t.resultOrder : "RANDOM",
+                levelRangeDefaultsVersion: 1,
+                lastMode: t.lastMode || "",
+                levelRanges: {
+                    SSS_CHALLENGE: m(r.SSS_CHALLENGE, t.minLevel, t.maxLevel),
+                    AJ_CHALLENGE: m(r.AJ_CHALLENGE),
+                    ALL_TRACKS: m(r.ALL_TRACKS)
+                }
+            };
+            return 1 !== t.levelRangeDefaultsVersion && (Object.keys(i.levelRanges).forEach(function(e) {
+                i.levelRanges[e].max || (i.levelRanges[e].max = f);
+            }), localStorage.setItem(p, JSON.stringify(i))), i;
+        } catch (e) {
+            return {
+                hideLocked: !1,
+                resultOrder: "RANDOM",
+                levelRangeDefaultsVersion: 1,
+                lastMode: "",
+                levelRanges: {
+                    SSS_CHALLENGE: {
+                        min: "",
+                        max: f
+                    },
+                    AJ_CHALLENGE: {
+                        min: "",
+                        max: f
+                    },
+                    ALL_TRACKS: {
+                        min: "",
+                        max: f
+                    }
+                }
+            };
         }
-    }
-
-    function installDeveloperTools() {
-        var previewSongs = {
-            UNPLAYED: [
-                createPreviewSong(
-                    "MASTER",
-                    "未プレイ確認用楽曲",
-                    "POPS & ANIME",
-                    "12+",
-                    null,
-                    false
-                ),
-                createPreviewSong(
-                    "ULTIMA",
-                    "非常に長い曲名が入った場合の折り返し表示確認用楽曲",
-                    "ORIGINAL",
-                    "14",
-                    null,
-                    false,
-                    true
-                )
-            ],
-            SSS_CHALLENGE: [
-                createPreviewSong(
-                    "MASTER",
-                    "SSSチャレンジ確認用楽曲",
-                    "niconico",
-                    "13+",
-                    1007000,
-                    false
-                ),
-                createPreviewSong(
-                    "ULTIMA",
-                    "SSS未達成のULTIMA確認用楽曲",
-                    "VARIETY",
-                    "14+",
-                    1005000,
-                    false
-                )
-            ],
-            AJ_CHALLENGE: [
-                createPreviewSong(
-                    "MASTER",
-                    "AJチャレンジ確認用楽曲",
-                    "東方Project",
-                    "14",
-                    1009000,
-                    false
-                ),
-                createPreviewSong(
-                    "ULTIMA",
-                    "SSS達成済み・AJ未達成確認用楽曲",
-                    "ORIGINAL",
-                    "15",
-                    1009500,
-                    false
-                )
-            ],
-            ALL_TRACKS: [
-                createPreviewSong(
-                    "MASTER",
-                    "全曲抽選確認用楽曲",
-                    "ゲキマイ",
-                    "13",
-                    1010000,
-                    true
-                ),
-                createPreviewSong(
-                    "ULTIMA",
-                    "RANDOM PICKER EXTRAテーマ確認用楽曲",
-                    "イロドリミドリ",
-                    "15+",
-                    1010000,
-                    true
-                )
-            ]
-        };
-
-        window.CHUNITHM_PICKER_DEV = {
-            preview: function (mode) {
-                var normalizedMode = String(mode || "").toUpperCase();
-
-                if (!previewSongs[normalizedMode]) {
-                    throw new Error(
-                        "mode must be UNPLAYED, SSS_CHALLENGE, " +
-                        "AJ_CHALLENGE, or ALL_TRACKS"
-                    );
-                }
-
-                App.state.mode = normalizedMode;
-                App.state.candidates = previewSongs[normalizedMode].slice();
-                App.state.difficulty = "BOTH";
-                App.ui.difficulty.value = "BOTH";
-                updateDisplay();
-                drawCards(App.state.candidates);
-                setMessage(
-                    "表示確認モードです。保存データは変更されていません。"
-                );
-
-                return normalizedMode;
-            },
-
-            restore: function () {
-                refreshMode();
-                updateDisplay();
-                App.ui.result.innerHTML = "";
-                setMessage("通常表示へ戻しました");
-                return App.state.mode;
-            },
-
-            runModeTests: runModeTests,
-            unlockReport: getUnlockReport
-        };
-    }
-
-    function getUnlockReport() {
-        var rows = UNLOCK_REQUIRED_CHARTS.map(function (entry) {
-            var name = entry[0];
-            var difficulty = entry[1];
-            var song = App.data[difficulty].filter(function (item) {
-                return songKey(difficulty, item.name) ===
-                    songKey(difficulty, name);
-            })[0];
-
-            return {
-                name: name,
-                difficulty: difficulty,
-                found: !!song,
-                played: song ? song.played : null,
-                locked: song ? song.locked : null
+    }(), b.data = (d = function() {
+        try {
+            var e = localStorage.getItem(c);
+            return e ? JSON.parse(e) : {
+                MASTER: [],
+                ULTIMA: []
             };
-        });
-
-        return {
-            definitions: rows.length,
-            found: rows.filter(function (row) {
-                return row.found;
-            }).length,
-            locked: rows.filter(function (row) {
-                return row.locked;
-            }).length,
-            unmatched: rows.filter(function (row) {
-                return !row.found;
-            }),
-            rows: rows
-        };
-    }
-
-    function createPreviewSong(
-        difficulty,
-        name,
-        genre,
-        level,
-        score,
-        hasAJ,
-        locked
-    ) {
-        return {
-            difficulty: difficulty,
-            name: name,
-            genre: genre,
-            level: level,
-            score: score,
-            played: score !== null,
-            lamp: hasAJ ? "ALL_JUSTICE" : null,
-            hasAJ: hasAJ,
-            requiresUnlock: locked === true,
-            locked: locked === true
-        };
-    }
-
-    function runModeTests() {
-        var originalData = App.data;
-        var originalMode = App.state.mode;
-        var originalCandidates = App.state.candidates;
-        var tests = [
-            {
-                name: "未プレイ曲があればUNPLAYED",
-                expectedMode: "UNPLAYED",
-                expectedCount: 1,
-                data: {
-                    MASTER: [
-                        createStoredTestSong(null, false),
-                        createStoredTestSong(1009000, true)
-                    ],
-                    ULTIMA: []
-                }
-            },
-            {
-                name: "全曲プレイ後はSSS_CHALLENGE",
-                expectedMode: "SSS_CHALLENGE",
-                expectedCount: 1,
-                data: {
-                    MASTER: [
-                        createStoredTestSong(1007000, false),
-                        createStoredTestSong(1008000, false)
-                    ],
-                    ULTIMA: []
-                }
-            },
-            {
-                name: "全曲SSS後はAJ_CHALLENGE",
-                expectedMode: "AJ_CHALLENGE",
-                expectedCount: 1,
-                data: {
-                    MASTER: [
-                        createStoredTestSong(1008000, false),
-                        createStoredTestSong(1009000, true)
-                    ],
-                    ULTIMA: []
-                }
-            },
-            {
-                name: "全曲AJ後はALL_TRACKS",
-                expectedMode: "ALL_TRACKS",
-                expectedCount: 2,
-                data: {
-                    MASTER: [
-                        createStoredTestSong(1009000, true)
-                    ],
-                    ULTIMA: [
-                        createStoredTestSong(1010000, true)
-                    ]
-                }
+        } catch (e) {
+            return {
+                MASTER: [],
+                ULTIMA: []
+            };
+        }
+    }(), s = {
+        MASTER: [],
+        ULTIMA: []
+    }, [ "MASTER", "ULTIMA" ].forEach(function(e) {
+        var t = d && Array.isArray(d[e]) ? d[e] : [];
+        s[e] = t.map(function(t) {
+            if ("string" == typeof t) {
+                var r = z(e, t);
+                return {
+                    name: t,
+                    genre: "不明",
+                    level: "不明",
+                    score: null,
+                    played: !1,
+                    lamp: null,
+                    hasAJ: !1,
+                    requiresUnlock: r,
+                    locked: r
+                };
             }
-        ];
-
-        var results = tests.map(function (test) {
-            App.data = test.data;
-            refreshMode();
-
+            var i = t.name || "", n = z(e, i), o = "boolean" == typeof t.played ? t.played : "number" == typeof t.score;
             return {
-                name: test.name,
-                expectedMode: test.expectedMode,
-                actualMode: App.state.mode,
-                expectedCount: test.expectedCount,
-                actualCount: App.state.candidates.length,
-                passed:
-                    App.state.mode === test.expectedMode &&
-                    App.state.candidates.length === test.expectedCount
+                name: i,
+                genre: t.genre || "不明",
+                level: t.level || "不明",
+                score: "number" == typeof t.score ? t.score : null,
+                played: o,
+                lamp: t.lamp || null,
+                hasAJ: !0 === t.hasAJ || "ALL_JUSTICE" === t.lamp || "ALL_JUSTICE_CRITICAL" === t.lamp,
+                requiresUnlock: n,
+                locked: n && !o
             };
+        }).filter(function(e) {
+            return e.name;
         });
-
-        App.data = originalData;
-        App.state.mode = originalMode;
-        App.state.candidates = originalCandidates;
-
-        return {
-            passed: results.every(function (test) {
-                return test.passed;
-            }),
-            results: results
+    }), s), a = document.createElement("div"), l = window.matchMedia && window.matchMedia("(pointer: coarse)").matches ? "420px" : "360px", 
+    a.id = "chuni-random-picker", a.style.cssText = "position:fixed;top:10px;right:10px;width:min(" + l + ",calc(100vw - 20px));max-height:calc(100vh - 20px);overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;touch-action:pan-y;box-sizing:border-box;background:#171c23;color:#fff;padding:0;z-index:2147483646;border-radius:14px;border:2px solid #e7473d;box-shadow:0 10px 30px rgba(0,0,0,.55);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;font-size:14px;line-height:1.5;", 
+    a.innerHTML = "<div id='crp-accent' style='height:6px;background:#e7473d'></div><div style='padding:16px'><div style='position:relative;min-height:25px'><div id='crp-title' style='min-width:0;padding:0 30px;font-size:16px;font-weight:800;letter-spacing:.015em;line-height:1.35;text-align:center;overflow-wrap:anywhere'></div><button id='crp-close' type='button' title='閉じる' style='position:absolute;top:0;right:0;width:26px;height:26px;padding:0;border:0;background:transparent;color:#fff;font-size:19px;line-height:1;cursor:pointer'>×</button></div><div id='crp-status' style='margin-top:12px;padding:10px 12px;background:rgba(0,0,0,.25);border-radius:9px'></div><div id='crp-message' style='min-height:21px;margin-top:8px;font-size:12px;color:#d7dce3'></div><div style='display:flex;gap:8px;margin-top:10px'><button id='crp-update' type='button' style='flex:1;padding:9px;border:0;border-radius:8px;font-weight:700;cursor:pointer'>一括更新</button><button id='crp-utility' type='button' style='padding:9px 12px;border:1px solid #687383;border-radius:8px;background:#252d38;color:#fff;cursor:pointer'>設定</button></div><select id='crp-difficulty' style='width:100%;height:40px;margin-top:12px;border:1px solid #687383;border-radius:8px;background:#252d38;color:#fff;padding:0 28px 0 10px;font-size:14px;cursor:pointer;appearance:auto'><option value='BOTH'>MASTER + ULTIMA</option><option value='MASTER'>MASTERのみ</option><option value='ULTIMA'>ULTIMAのみ</option></select><details id='crp-level-filter' style='display:none;margin-top:10px;border:1px solid #687383;border-radius:8px;background:rgba(0,0,0,.16)'><summary id='crp-level-filter-summary' style='padding:9px 10px;cursor:pointer;font-size:12px;font-weight:700;user-select:none'>レベル範囲を指定</summary><div style='display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto;gap:6px;align-items:center;padding:0 10px 10px'><span style='position:relative;min-width:0'><select id='crp-min-level' aria-label='最低レベル' style='width:100%;height:34px;border:1px solid #687383;border-radius:6px;background:#252d38;color:#fff;padding:0 24px 0 7px;font-size:13px;cursor:pointer;appearance:none'>" + A("") + "</select><span aria-hidden='true' style='position:absolute;top:50%;right:7px;transform:translateY(-50%);pointer-events:none;font-size:10px'>▼</span></span><span>以上</span><span style='position:relative;min-width:0'><select id='crp-max-level' aria-label='最高レベル' style='width:100%;height:34px;border:1px solid #687383;border-radius:6px;background:#252d38;color:#fff;padding:0 24px 0 7px;font-size:13px;cursor:pointer;appearance:none'>" + A("") + "</select><span aria-hidden='true' style='position:absolute;top:50%;right:7px;transform:translateY(-50%);pointer-events:none;font-size:10px'>▼</span></span><span>以下</span></div></details><div style='display:flex;gap:8px;align-items:center;margin-top:10px'><label for='crp-count' style='white-space:nowrap'>曲数</label><select id='crp-count' aria-label='抽選曲数' style='width:60px;height:38px;box-sizing:border-box;border:1px solid #687383;border-radius:8px;background:#252d38;color:#fff;padding:0 5px;font-size:14px;cursor:pointer;appearance:auto'>" + function() {
+        var e, t = "";
+        for (e = 1; e <= 9; e += 1) t += "<option value='" + e + "'" + (3 === e ? " selected" : "") + ">" + e + "</option>";
+        return t;
+    }() + "</select><button id='crp-pick' type='button' style='flex:1;height:38px;border:0;border-radius:8px;font-weight:800;cursor:pointer'>抽選</button></div><div id='crp-result' style='margin-top:12px'></div></div>", 
+    document.body.appendChild(a), b.ui.box = a, b.ui.title = a.querySelector("#crp-title"), 
+    b.ui.accent = a.querySelector("#crp-accent"), b.ui.status = a.querySelector("#crp-status"), 
+    b.ui.message = a.querySelector("#crp-message"), b.ui.update = a.querySelector("#crp-update"), 
+    b.ui.utility = a.querySelector("#crp-utility"), b.ui.pick = a.querySelector("#crp-pick"), 
+    b.ui.result = a.querySelector("#crp-result"), b.ui.difficulty = a.querySelector("#crp-difficulty"), 
+    b.ui.levelFilter = a.querySelector("#crp-level-filter"), b.ui.levelFilterSummary = a.querySelector("#crp-level-filter-summary"), 
+    b.ui.minLevel = a.querySelector("#crp-min-level"), b.ui.maxLevel = a.querySelector("#crp-max-level"), 
+    b.ui.count = a.querySelector("#crp-count"), b.ui.close = a.querySelector("#crp-close"), 
+    a.querySelector("#crp-close").onclick = function() {
+        window.CHUNITHM_PICKER_SCROLL_LOCK && "function" == typeof window.CHUNITHM_PICKER_SCROLL_LOCK.restore && window.CHUNITHM_PICKER_SCROLL_LOCK.restore(), 
+        a.remove();
+    }, a.querySelector("#crp-utility").onclick = function() {
+        var e = document.getElementById("chuni-random-picker-utility");
+        e && e.remove();
+        var t = document.createElement("div");
+        t.id = "chuni-random-picker-utility", t.style.cssText = "position:absolute;inset:0;box-sizing:border-box;background:#171c23;color:#fff;padding:16px;z-index:10;border-radius:12px;border:2px solid #8b96a6;box-shadow:0 10px 30px rgba(0,0,0,.55);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif;font-size:14px;", 
+        t.innerHTML = "<div style='position:relative;min-height:30px'><div style='padding:2px 34px 0;font-size:17px;font-weight:800;text-align:center'>設定</div><button id='crp-util-close' type='button' aria-label='閉じる' style='position:absolute;top:0;right:0;width:28px;height:28px;padding:0;border:0;border-radius:50%;background:#fff;color:#111;font-size:18px;line-height:1;cursor:pointer'>×</button></div><div style='margin-top:12px;text-align:center'>MASTER: " + b.data.MASTER.length + "曲<br>ULTIMA: " + b.data.ULTIMA.length + "曲</div><label style='display:flex;gap:8px;align-items:flex-start;margin-top:14px;padding:10px;background:rgba(0,0,0,.2);border-radius:8px;cursor:pointer'><input id='crp-hide-locked' type='checkbox' " + (b.settings.hideLocked ? "checked" : "") + "><span>未解禁曲を抽選から除外</span></label><label for='crp-result-order' style='display:block;margin-top:12px;padding:10px;background:rgba(0,0,0,.2);border-radius:8px'><span style='display:block;margin-bottom:7px;font-weight:700'>抽選結果の並び順</span><select id='crp-result-order' style='width:100%;height:38px;box-sizing:border-box;border:1px solid #687383;border-radius:7px;background:#252d38;color:#fff;padding:0 8px;font-size:14px;cursor:pointer'><option value='RANDOM'" + ("RANDOM" === b.settings.resultOrder ? " selected" : "") + ">完全ランダム</option><option value='ASC'" + ("ASC" === b.settings.resultOrder ? " selected" : "") + ">昇順（低いレベルから）</option><option value='DESC'" + ("DESC" === b.settings.resultOrder ? " selected" : "") + ">降順（高いレベルから）</option></select></label><div style='margin-top:16px'><button id='crp-delete' type='button' style='width:100%;box-sizing:border-box;padding:9px;border:1px solid #dc5b5b;border-radius:8px;background:#3a2024;color:#fff;cursor:pointer'>データ削除</button></div>", 
+        b.ui.box.scrollTop = 0, b.ui.box.appendChild(t), t.querySelector("#crp-util-close").onclick = function() {
+            t.remove();
+        }, t.querySelector("#crp-hide-locked").onchange = function() {
+            b.settings.hideLocked = this.checked, h(), b.state.results = [], b.state.kept = {}, b.state.renderResults = null, 
+            v(), C(), 
+            b.ui.result.innerHTML = "", 
+            I(this.checked ? "解禁が必要な曲を抽選対象から除外しました" : "解禁が必要な曲を抽選対象へ戻しました");
+        }, t.querySelector("#crp-result-order").onchange = function() {
+            b.settings.resultOrder = this.value, h(), b.state.results = [], b.state.kept = {}, b.state.renderResults = null, 
+            b.ui.result.innerHTML = "", 
+            I("抽選結果の並び順を保存しました");
+        }, t.querySelector("#crp-delete").onclick = function() {
+            window.confirm("保存データを削除しますか？") && (localStorage.removeItem(c), b.data = {
+                MASTER: [],
+                ULTIMA: []
+            }, b.state.results = [], b.state.kept = {}, b.state.renderResults = null, b.ui.result.innerHTML = "", 
+            v(), C(), t.remove(), 
+            I("保存データを削除しました"));
         };
-    }
+    }, b.ui.difficulty.onchange = function() {
+        b.state.difficulty = this.value, b.state.results = [], b.state.kept = {}, b.state.renderResults = null, 
+        b.ui.result.innerHTML = "", 
+        C();
+    }, b.ui.minLevel.onchange = function() {
+        M().min = this.value, L("min"), h(), b.state.results = [], b.state.kept = {}, b.state.renderResults = null, 
+        b.ui.result.innerHTML = "", 
+        C();
+    }, b.ui.maxLevel.onchange = function() {
+        M().max = this.value, L("max"), h(), b.state.results = [], b.state.kept = {}, b.state.renderResults = null, 
+        b.ui.result.innerHTML = "", 
+        C();
+    }, b.ui.pick.onclick = function() {
+        var e = function(e) {
+            var t, r = (t = b.state.difficulty, R().filter(function(e) {
+                return "BOTH" === t || e.difficulty === t;
+            })).slice(), i = Object.keys(b.state.kept).map(function(e) {
+                return b.state.kept[e];
+            }).filter(function(e) {
+                var t = H(e.difficulty, e.name);
+                return r.some(function(e) {
+                    return H(e.difficulty, e.name) === t;
+                });
+            }), n = {};
+            i.forEach(function(e) {
+                n[H(e.difficulty, e.name)] = !0;
+            }), r = r.filter(function(e) {
+                return !n[H(e.difficulty, e.name)];
+            }), e = Math.max(e, i.length);
+            for (;i.length < e && r.length > 0; ) {
+                var o = Math.floor(Math.random() * r.length);
+                i.push(r.splice(o, 1)[0]);
+            }
+            "RANDOM" !== b.settings.resultOrder && i.sort(function(e, t) {
+                var r = u.indexOf(e.level), n = u.indexOf(t.level);
+                return r < 0 ? n < 0 ? 0 : 1 : n < 0 ? -1 : "DESC" === b.settings.resultOrder ? n - r : r - n;
+            });
+            return 0 === i.length ? I("選択中の難易度に抽選対象曲がありません") : I(""), i;
+        }(Number(b.ui.count.value));
+        b.state.results = e, b.state.renderResults = function t() {
+            e.length ? (b.ui.result.innerHTML = "<div style='margin-bottom:4px;font-size:11px;color:#cbd3dc;text-align:center'>曲カードをタップすると次の抽選でもKEEP</div>" + e.map(function(e, t) {
+                var r = "MASTER" === e.difficulty, i = r ? "#9d20df" : "#111214", n = r ? "#b845ee" : "#30343a", o = !!b.state.kept[H(e.difficulty, e.name)];
+                return "<div data-crp-result-index='" + t + "' role='button' tabindex='0' aria-pressed='" + o + "' style='box-sizing:border-box;background:" + (o ? "#f5c84c" : "#fff") + ";padding:5px;margin-top:9px;border:2px solid " + (o ? "#ffe680" : "transparent") + ";border-radius:7px;box-shadow:" + (o ? "0 0 0 2px #9b6b00,0 5px 14px rgba(0,0,0,.38)" : "0 4px 10px rgba(0,0,0,.24)") + ";cursor:pointer'><div style='display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px;align-items:center;min-height:29px;box-sizing:border-box;padding:4px 7px;background:#1d2b3a;color:#fff;overflow:hidden'><span style='white-space:nowrap;font-size:12px;font-weight:900;letter-spacing:.02em'>TRACK " + (t + 1) + "</span><div style='position:relative;min-width:0;overflow:hidden;box-sizing:border-box;background:" + i + ";border:1px solid " + n + ";min-height:22px;padding:2px 34px;border-radius:4px;font-size:11px;font-weight:900;text-align:center;line-height:1.35;box-shadow:inset 0 -1px 0 rgba(0,0,0,.2)'>" + (r ? "" : "<span style='position:absolute;left:0;top:0;bottom:0;width:34px;background:linear-gradient(45deg,transparent 0 18%,#ff3151 19% 34%,#6f6870 35% 40%,#ff3151 41% 56%,transparent 57% 100%)'></span><span style='position:absolute;right:0;top:0;bottom:0;width:34px;background:linear-gradient(-45deg,transparent 0 18%,#ff3151 19% 34%,#6f6870 35% 40%,#ff3151 41% 56%,transparent 57% 100%)'></span>") + "<span style='position:relative;z-index:1;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>" + (o ? "KEEP / " : "") + J(e.difficulty) + " / " + J(e.genre || "不明") + "</span>" + (e.locked ? "<span title='未解禁の可能性があります' aria-label='未解禁の可能性があります' style='position:absolute;top:50%;right:5px;transform:translateY(-50%);white-space:nowrap;z-index:2;background:#fff;color:#111;border:1px solid rgba(0,0,0,.22);padding:2px 5px;border-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,.3);font-size:11px;line-height:1.2'>🔒</span>" : "") + "</div></div><div style='position:relative;display:flex;align-items:center;justify-content:flex-start;min-height:44px;background:#faf9d9;color:#080808;padding:8px 48px 8px 12px;box-sizing:border-box'><div style='min-width:0;width:100%;font-size:16px;font-weight:800;line-height:1.35;text-align:left;overflow-wrap:anywhere;word-break:break-word'>" + J(e.name) + "</div><span style='position:absolute;top:50%;right:0;transform:translateY(-50%);white-space:nowrap;background:" + i + ";border:1px solid " + n + ";color:#fff;padding:3px 7px;border-radius:5px;font-size:13px;font-weight:900'>" + J(e.level || "不明") + "</span></div></div>";
+            }).join(""), Array.from(b.ui.result.querySelectorAll("[data-crp-result-index]")).forEach(function(r) {
+                function i() {
+                    var i = e[Number(r.getAttribute("data-crp-result-index"))], n = H(i.difficulty, i.name);
+                    b.state.kept[n] ? (delete b.state.kept[n], I("KEEPを解除しました：" + i.name)) : (b.state.kept[n] = i, 
+                    I("KEEPしました：" + i.name)), t();
+                }
+                r.onclick = i, r.onkeydown = function(e) {
+                    "Enter" !== e.key && " " !== e.key || (e.preventDefault(), i());
+                };
+            })) : b.ui.result.innerHTML = "";
+        }, b.state.renderResults();
+    }, b.ui.update.onclick = function() {
+        b.state.busy || (_(!0), I("取得準備中…"), Promise.all([ (I("楽曲一覧の入口を取得中…"), O("/chuni-mobile/html/mobile/record/musicGenre/").then(function(e) {
+            B(e);
+            var t = e.doc.querySelector("select[name='genre']"), r = t && t.closest("form");
+            if (!r) throw new Error("ジャンル検索フォームが見つかりません");
+            var i = N(r);
+            return i.set("genre", "99"), I("MASTERを取得中…"), q("/chuni-mobile/html/mobile/record/musicGenre/sendMaster", i).then(function(e) {
+                return B(e), I("ULTIMAを取得中…"), q("/chuni-mobile/html/mobile/record/musicGenre/sendUltima", i).then(function(t) {
+                    return B(t), {
+                        MASTER: U(e.doc, "MASTER"),
+                        ULTIMA: U(t.doc, "ULTIMA")
+                    };
+                });
+            });
+        })), (I("レベル検索フォームを取得中…"), O("/chuni-mobile/html/mobile/record/musicLevel/").then(function(e) {
+            B(e);
+            var t = e.doc.querySelector("select[name='level']"), r = t && t.closest("form");
+            if (!r) throw new Error("レベル検索フォームが見つかりません");
+            var i = Array.from(t.options).map(function(e) {
+                return {
+                    value: e.value,
+                    label: e.textContent.replace(/^LEVEL\s*/i, "").trim()
+                };
+            }).filter(function(e) {
+                return Number(e.value) >= 12;
+            }), n = N(r), o = r.action || "/chuni-mobile/html/mobile/record/musicLevel/sendSearch/", a = {}, l = 0;
+            return function e() {
+                if (l >= i.length) return Promise.resolve(a);
+                var t = i[l++], r = new URLSearchParams(n.toString());
+                return r.set("level", t.value), I("レベル " + t.label + " を取得中（" + l + "/" + i.length + "）"), 
+                q(o, r).then(function(r) {
+                    return B(r), function(e, t, r) {
+                        Array.from(e.querySelectorAll(".musiclist_box")).forEach(function(e) {
+                            var i = null, n = e.closest("form") || e.parentElement || e;
+                            if (e.classList.contains("bg_master") || n.querySelector(".bg_master") ? i = "MASTER" : (e.classList.contains("bg_ultima") || n.querySelector(".bg_ultima")) && (i = "ULTIMA"), 
+                            i) {
+                                var o = e.querySelector(".music_title");
+                                o && (r[H(i, o.textContent)] = t);
+                            }
+                        });
+                    }(r.doc, t.label, a), e();
+                });
+            }();
+        })) ]).then(function(e) {
+            var t = e[0], r = e[1];
+            [ "MASTER", "ULTIMA" ].forEach(function(e) {
+                t[e].forEach(function(t) {
+                    var i = H(e, t.name);
+                    t.level = r[i] || "不明";
+                });
+            }), function(e) {
+                localStorage.setItem(c, JSON.stringify(e));
+            }(t), b.data = t, b.state.results = [], b.state.kept = {}, b.state.renderResults = null, v(), 
+            b.ui.result.innerHTML = "", 
+            I("更新完了：MASTER " + t.MASTER.length + "曲 / ULTIMA " + t.ULTIMA.length + "曲");
+        }).catch(function(e) {
+            console.error("[CHUNITHM Random Picker]", e), I("取得に失敗しました。CHUNITHM-NETへのログイン状態を確認してください。既存データは保持されています。");
+        }).then(function() {
+            _(!1);
+        }));
+    }, r = document.documentElement, i = document.body, n = {
+        rootOverflow: r.style.overflow,
+        rootOverscroll: r.style.overscrollBehavior,
+        bodyOverflow: i.style.overflow,
+        bodyOverscroll: i.style.overscrollBehavior
+    }, o = !1, r.style.overflow = "hidden", r.style.overscrollBehavior = "none", i.style.overflow = "hidden", 
+    i.style.overscrollBehavior = "none", window.CHUNITHM_PICKER_SCROLL_LOCK = {
+        restore: function() {
+            o || (o = !0, r.style.overflow = n.rootOverflow, r.style.overscrollBehavior = n.rootOverscroll, 
+            i.style.overflow = n.bodyOverflow, i.style.overscrollBehavior = n.bodyOverscroll, 
+            delete window.CHUNITHM_PICKER_SCROLL_LOCK);
+        }
+    }, v(), C();
+}();
 
-    function createStoredTestSong(score, hasAJ) {
-        return {
-            name: "TEST",
-            genre: "TEST",
-            level: "14",
-            score: score,
-            played: score !== null,
-            lamp: hasAJ ? "ALL_JUSTICE" : null,
-            hasAJ: hasAJ,
-            requiresUnlock: false,
-            locked: false
-        };
-    }
-
-    function escapeHTML(value) {
-        return String(value == null ? "" : value)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
-    }
-})();

@@ -214,8 +214,11 @@ details.release-notes[open] summary {
             <li>MASTER・ULTIMA対応</li>
             <li>ジャンル・レベル表示</li>
             <li>対象楽曲の一覧表示</li>
+            <li>抽選結果の並び順を完全ランダム・昇順・降順から選択</li>
+            <li>抽選結果・楽曲一覧から次回抽選へ曲をKEEP</li>
             <li>未解禁曲の表示・除外設定</li>
             <li>全曲を埋めた人向けの追加機能</li>
+            <li>起動時に最新版を自動取得</li>
             <li>スマートフォン対応</li>
         </ul>
 
@@ -250,6 +253,7 @@ details.release-notes[open] summary {
             <li>「一括更新」で最新の楽曲情報を保存します。</li>
             <li>MASTER・ULTIMAと抽選曲数を選びます。</li>
             <li>「抽選」を押します。</li>
+            <li>残したい曲はカードをタップしてKEEPできます。</li>
         </ol>
         <p class="notice">
             未解禁曲は「設定」から抽選対象外にできます。
@@ -285,6 +289,18 @@ details.release-notes[open] summary {
         <summary>リリースノート</summary>
         <div class="release-content">
             <article class="release">
+                <time datetime="2026-08-13">2026-08-13</time>
+                <h3>抽選結果の並び順・KEEP・自動更新</h3>
+                <ul>
+                    <li>抽選結果を完全ランダム・昇順・降順から選べるようにしました。</li>
+                    <li>選択した並び順をブラウザへ保存するようにしました。</li>
+                    <li>抽選結果と楽曲一覧から任意の曲をKEEPできるようにしました。</li>
+                    <li>再抽選時はKEEPした曲を残し、ほかの枠だけを抽選します。</li>
+                    <li>起動時に最新版を確認する更新ローダーを導入しました。</li>
+                    <li>ブックマークへ登録するコードを短い呼び出し形式へ変更しました。</li>
+                </ul>
+            </article>
+            <article class="release">
                 <time datetime="2026-07-25">2026-07-25</time>
                 <h3>公開版</h3>
                 <ul>
@@ -306,7 +322,7 @@ details.release-notes[open] summary {
 
 <script>
 var bookmarklet =
-    "javascript:(()=>{fetch('https://maqlaguh.github.io/chuni-unplayed-picker/main.js').then(r=>r.text()).then(eval)})()";
+    "javascript:(()=>{fetch('https://maqlaguh.github.io/chuni-unplayed-picker/loader.js?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(eval)})()";
 
 document.getElementById("code").textContent = bookmarklet;
 
