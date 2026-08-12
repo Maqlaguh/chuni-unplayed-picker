@@ -314,7 +314,7 @@ details.release-notes[open] summary {
 
 <script>
 var bookmarklet =
-    "javascript:(()=>{const b='https://maqlaguh.github.io/chuni-unplayed-picker/test/',k='chuni_picker_test_code_version';fetch(b+'version.json?t='+Date.now(),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('version '+r.status);return r.json()}).then(m=>{const v=String(m.version||''),s=String(m.script||'main.js'),p=localStorage.getItem(k);if(!v)throw new Error('version is empty');return fetch(b+s+'?v='+encodeURIComponent(v),{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('script '+r.status);return r.text()}).then(c=>{(0,eval)(c);localStorage.setItem(k,v);if(p&&p!==v){const e=document.getElementById('crp-message');if(e)e.textContent='試験版を更新しました：'+p+' → '+v}})}).catch(e=>{console.error('[CHUNITHM Picker Test Loader]',e);alert('試験版の読み込みに失敗しました。時間をおいて再実行してください。')})})()";
+    "javascript:(()=>{fetch('https://maqlaguh.github.io/chuni-unplayed-picker/test/loader.js?t='+Date.now(),{cache:'no-store'}).then(r=>r.text()).then(eval)})()";
 
 document.getElementById("code").textContent = bookmarklet;
 
