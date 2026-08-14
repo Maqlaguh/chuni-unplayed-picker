@@ -369,7 +369,7 @@
         a.fillText(x[b.state.mode].title, t / 2, 102), a.font = "700 26px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
         a.fillStyle = "rgba(255,255,255,.78)", a.fillText(x[b.state.mode].label + "から " + e.length + "曲を選曲", t / 2, 153), 
         e.forEach(function(e, n) {
-            var o = 198 + n * i, d = "MASTER" === e.difficulty, s = d ? "#9d20df" : "#111214", c = d ? "#c965f2" : "#ff4058", p = r + 210, u = t - r - 14 - p;
+            var o = 198 + n * i, d = "MASTER" === e.difficulty, s = d ? "#9d20df" : "#111214", c = d ? "#c965f2" : "#ff4058", p = r + 210, u = t - r - 34 - p;
             a.save(), a.shadowColor = "rgba(0,0,0,.35)", a.shadowBlur = 18, a.shadowOffsetY = 8, 
             W(a, r, o, t - 2 * r, 232, 22), a.fillStyle = "#fbfae4", a.fill(), a.restore(), 
             W(a, r + 14, o + 14, t - 2 * r - 28, 84, 13), a.fillStyle = "#1d2b3a", a.fill(), 
@@ -382,12 +382,8 @@
             }), a.restore()), a.fillStyle = "#ffffff", 
             a.textAlign = "left", a.font = "900 31px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
             a.fillText("TRACK " + (n + 1), r + 29, o + 67), a.textAlign = "center", 
-            function() {
-                for (var t = e.difficulty + " / " + (e.genre || "不明"), r = 26; r > 20 && (a.font = "900 " + r + "px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
-                a.measureText(t).width > u - 120); ) r -= 1;
-                a.font = "900 " + r + "px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
-                a.fillText(t, p + u / 2, o + 65);
-            }(), a.fillStyle = "#0b0d10", a.textAlign = "left", 
+            a.font = "900 28px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            a.fillText(e.difficulty + " / " + (e.genre || "不明"), p + u / 2, o + 66), a.fillStyle = "#0b0d10", a.textAlign = "left", 
             a.font = "800 40px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif";
             var f = V(e.name, a, t - 2 * r - 220), g = f.slice(0, 2), m = 1 === g.length ? o + 171 : o + 149;
             g.length > 1 && f.length > 2 && (g[1] = g[1].slice(0, -1) + "…"), g.forEach(function(e, t) {
