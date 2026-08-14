@@ -347,13 +347,44 @@
             n && t.measureText(o).width > r ? (i.push(n), n = e) : n = o;
         }), n && i.push(n), i.length ? i : [ "" ];
     }
+    function G(e, t, r) {
+        var i, n, o, a = String(t || ""), l = "-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif";
+        for (i = 36; i >= 32; i -= 1) if (e.font = "800 " + i + "px " + l, e.measureText(a).width <= r) return {
+            lines: [ a ],
+            fontSize: i
+        };
+        for (i = 36; i >= 28; i -= 1) {
+            e.font = "800 " + i + "px " + l;
+            var d = Array.from(a), s = null;
+            for (n = 1; n < d.length; n += 1) {
+                var c = d.slice(0, n).join("").trim(), p = d.slice(n).join("").trim();
+                if (c && p) {
+                    var u = e.measureText(c).width, f = e.measureText(p).width;
+                    if (u <= r && f <= r) {
+                        var g = /[\s\-–—~～/・:：]/.test(d[n - 1]) || /[\s\-–—~～/・:：]/.test(d[n]), x = Math.abs(u - f) + (g ? 0 : .28 * r);
+                        (!s || x < s.score) && (s = {
+                            lines: [ c, p ],
+                            fontSize: i,
+                            score: x
+                        });
+                    }
+                }
+            }
+            if (s) return s;
+        }
+        return e.font = "800 28px " + l, o = V(a, e, r), n = o.length > 2, o = o.slice(0, 2), n && o.length > 1 && (o[1] = o[1].replace(/.$/, "…")), 
+        {
+            lines: o,
+            fontSize: 28
+        };
+    }
     function W(e, t, r, i, n, o) {
         o = Math.min(o, i / 2, n / 2), e.beginPath(), e.moveTo(t + o, r), 
         e.arcTo(t + i, r, t + i, r + n, o), e.arcTo(t + i, r + n, t, r + n, o), 
         e.arcTo(t, r + n, t, r, o), e.arcTo(t, r, t + i, r, o), e.closePath();
     }
     function X(e) {
-        var t = 1080, r = 64, i = 264, n = 348 + e.length * i, o = document.createElement("canvas");
+        var t = 1080, r = 64, i = 242, n = 346 + e.length * i, o = document.createElement("canvas");
         o.width = t, o.height = n;
         var a = o.getContext("2d");
         if (!a) throw new Error("画像を生成できませんでした");
@@ -369,29 +400,29 @@
         a.fillText(x[b.state.mode].title, t / 2, 102), a.font = "700 26px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
         a.fillStyle = "rgba(255,255,255,.78)", a.fillText(x[b.state.mode].label + "から " + e.length + "曲を選曲", t / 2, 153), 
         e.forEach(function(e, n) {
-            var o = 198 + n * i, d = "MASTER" === e.difficulty, s = d ? "#9d20df" : "#111214", c = d ? "#c965f2" : "#ff4058", p = r + 210, u = t - r - 34 - p;
+            var o = 198 + n * i, d = "MASTER" === e.difficulty, s = d ? "#9d20df" : "#111214", c = d ? "#c965f2" : "#ff4058", p = r + 190, u = t - r - 34 - p;
             a.save(), a.shadowColor = "rgba(0,0,0,.35)", a.shadowBlur = 18, a.shadowOffsetY = 8, 
-            W(a, r, o, t - 2 * r, 232, 22), a.fillStyle = "#fbfae4", a.fill(), a.restore(), 
-            W(a, r + 14, o + 14, t - 2 * r - 28, 84, 13), a.fillStyle = "#1d2b3a", a.fill(), 
-            W(a, p, o + 24, u, 64, 10), a.fillStyle = s, a.fill(), a.strokeStyle = c, a.lineWidth = 3, a.stroke(), 
-            d || (a.save(), W(a, p, o + 24, u, 64, 10), a.clip(), a.strokeStyle = "#ff3151", a.lineWidth = 15, 
+            W(a, r, o, t - 2 * r, 218, 15), a.fillStyle = "#fbfae4", a.fill(), a.restore(), 
+            W(a, r + 14, o + 14, t - 2 * r - 28, 76, 10), a.fillStyle = "#1d2b3a", a.fill(), 
+            W(a, p, o + 25, u, 54, 9), a.fillStyle = s, a.fill(), a.strokeStyle = c, a.lineWidth = 3, a.stroke(), 
+            d || (a.save(), W(a, p, o + 25, u, 54, 9), a.clip(), a.strokeStyle = "#ff3151", a.lineWidth = 13, 
             [ p + 16, p + 42 ].forEach(function(e) {
-                a.beginPath(), a.moveTo(e - 24, o + 17), a.lineTo(e + 24, o + 95), a.stroke();
+                a.beginPath(), a.moveTo(e - 21, o + 19), a.lineTo(e + 21, o + 85), a.stroke();
             }), [ p + u - 42, p + u - 16 ].forEach(function(e) {
-                a.beginPath(), a.moveTo(e + 24, o + 17), a.lineTo(e - 24, o + 95), a.stroke();
+                a.beginPath(), a.moveTo(e + 21, o + 19), a.lineTo(e - 21, o + 85), a.stroke();
             }), a.restore()), a.fillStyle = "#ffffff", 
-            a.textAlign = "left", a.font = "900 31px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
-            a.fillText("TRACK " + (n + 1), r + 29, o + 67), a.textAlign = "center", 
-            a.font = "900 28px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
-            a.fillText(e.difficulty + " / " + (e.genre || "不明"), p + u / 2, o + 66), a.fillStyle = "#0b0d10", a.textAlign = "left", 
-            a.font = "800 40px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif";
-            var f = V(e.name, a, t - 2 * r - 220), g = f.slice(0, 2), m = 1 === g.length ? o + 171 : o + 149;
-            g.length > 1 && f.length > 2 && (g[1] = g[1].slice(0, -1) + "…"), g.forEach(function(e, t) {
-                a.fillText(e, r + 32, m + 46 * t);
-            }), W(a, t - r - 145, o + 132, 115, 68, 13), a.fillStyle = s, a.fill(), a.strokeStyle = c, 
+            a.textAlign = "left", a.font = "900 29px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            a.fillText("TRACK " + (n + 1), r + 29, o + 62), a.textAlign = "center", 
+            a.font = "900 25px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            a.fillText(e.difficulty + " / " + (e.genre || "不明"), p + u / 2, o + 61), a.fillStyle = "#0b0d10", a.textAlign = "left";
+            var f = G(a, e.name, t - 2 * r - 190), g = 1 === f.lines.length ? o + 168 : o + 145;
+            a.font = "800 " + f.fontSize + "px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            f.lines.forEach(function(e, t) {
+                a.fillText(e, r + 32, g + 44 * t);
+            }), W(a, t - r - 130, o + 119, 100, 60, 12), a.fillStyle = s, a.fill(), a.strokeStyle = c, 
             a.lineWidth = 3, a.stroke(), a.fillStyle = "#ffffff", a.textAlign = "center", 
-            a.font = "900 32px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
-            a.fillText(e.level || "不明", t - r - 87.5, o + 176);
+            a.font = "900 29px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            a.fillText(e.level || "不明", t - r - 80, o + 159);
         }), a.fillStyle = "rgba(255,255,255,.62)", a.textAlign = "center", 
         a.font = "600 21px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
         a.fillText("CHUNITHM Unplayed Picker", t / 2, n - 35);
