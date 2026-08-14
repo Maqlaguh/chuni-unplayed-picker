@@ -369,17 +369,24 @@
         a.fillText(x[b.state.mode].title, t / 2, 102), a.font = "700 26px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
         a.fillStyle = "rgba(255,255,255,.78)", a.fillText(x[b.state.mode].label + "から " + e.length + "曲を選曲", t / 2, 153), 
         e.forEach(function(e, n) {
-            var o = 198 + n * i, d = "MASTER" === e.difficulty, s = d ? "#9d20df" : "#17191d", c = d ? "#c965f2" : "#ff4058";
+            var o = 198 + n * i, d = "MASTER" === e.difficulty, s = d ? "#9d20df" : "#111214", c = d ? "#c965f2" : "#ff4058", p = r + 190, u = t - r - 8 - p;
             a.save(), a.shadowColor = "rgba(0,0,0,.35)", a.shadowBlur = 18, a.shadowOffsetY = 8, 
             W(a, r, o, t - 2 * r, 178, 22), a.fillStyle = "#fbfae4", a.fill(), a.restore(), 
-            W(a, r, o, t - 2 * r, 55, 22), a.fillStyle = "#1d2b3a", a.fill(), a.fillStyle = "#ffffff", 
+            W(a, r + 8, o + 8, t - 2 * r - 16, 55, 13), a.fillStyle = "#1d2b3a", a.fill(), 
+            W(a, p, o + 13, u, 45, 9), a.fillStyle = s, a.fill(), a.strokeStyle = c, a.lineWidth = 3, a.stroke(), 
+            d || (a.save(), W(a, p, o + 13, u, 45, 9), a.clip(), a.strokeStyle = "#ff3151", a.lineWidth = 12, 
+            [ p + 16, p + 42 ].forEach(function(e) {
+                a.beginPath(), a.moveTo(e - 18, o + 8), a.lineTo(e + 18, o + 63), a.stroke();
+            }), [ p + u - 42, p + u - 16 ].forEach(function(e) {
+                a.beginPath(), a.moveTo(e + 18, o + 8), a.lineTo(e - 18, o + 63), a.stroke();
+            }), a.restore()), a.fillStyle = "#ffffff", 
             a.textAlign = "left", a.font = "900 25px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
-            a.fillText("TRACK " + (n + 1), r + 24, o + 37), a.fillStyle = c, a.fillRect(r + 190, o + 12, 5, 31), 
-            a.fillStyle = "#ffffff", a.font = "800 22px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
-            a.fillText(e.difficulty + " / " + (e.genre || "不明"), r + 213, o + 36), a.fillStyle = "#0b0d10", 
+            a.fillText("TRACK " + (n + 1), r + 24, o + 44), a.textAlign = "center", 
+            a.font = "900 22px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            a.fillText(e.difficulty + " / " + (e.genre || "不明"), p + u / 2, o + 43), a.fillStyle = "#0b0d10", a.textAlign = "left", 
             a.font = "800 34px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif";
-            var p = V(e.name, a, t - 2 * r - 190), u = p.slice(0, 2);
-            u.length > 1 && p.length > 2 && (u[1] = u[1].slice(0, -1) + "…"), u.forEach(function(e, t) {
+            var f = V(e.name, a, t - 2 * r - 190), g = f.slice(0, 2);
+            g.length > 1 && f.length > 2 && (g[1] = g[1].slice(0, -1) + "…"), g.forEach(function(e, t) {
                 a.fillText(e, r + 27, o + 101 + 42 * t);
             }), W(a, t - r - 128, o + 81, 100, 55, 12), a.fillStyle = s, a.fill(), a.strokeStyle = c, 
             a.lineWidth = 3, a.stroke(), a.fillStyle = "#ffffff", a.textAlign = "center", 
@@ -418,7 +425,7 @@
         });
     }
     function te(e) {
-        var t = "CHUNITHMで次に遊ぶ" + e.length + "曲を抽選しました。 #CHUNITHM", r = !1;
+        var t = "CHUNITHMで次に遊ぶ" + e.length + "曲を抽選しました。", r = !1;
         try {
             r = "function" == typeof File && navigator.share && navigator.canShare && navigator.canShare({
                 files: [ new File([ "" ], "share.png", {
