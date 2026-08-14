@@ -340,6 +340,114 @@
     function J(e) {
         return String(null == e ? "" : e).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
     }
+    function V(e, t, r) {
+        var i = [], n = "";
+        return Array.from(String(e || "")).forEach(function(e) {
+            var o = n + e;
+            n && t.measureText(o).width > r ? (i.push(n), n = e) : n = o;
+        }), n && i.push(n), i.length ? i : [ "" ];
+    }
+    function W(e, t, r, i, n, o) {
+        o = Math.min(o, i / 2, n / 2), e.beginPath(), e.moveTo(t + o, r), 
+        e.arcTo(t + i, r, t + i, r + n, o), e.arcTo(t + i, r + n, t, r + n, o), 
+        e.arcTo(t, r + n, t, r, o), e.arcTo(t, r, t + i, r, o), e.closePath();
+    }
+    function X(e) {
+        var t = 1080, r = 64, i = 218, n = 374 + e.length * i, o = document.createElement("canvas");
+        o.width = t, o.height = n;
+        var a = o.getContext("2d");
+        if (!a) throw new Error("画像を生成できませんでした");
+        var l = {
+            UNPLAYED: [ "#e7473d", "#571b23" ],
+            SSS_CHALLENGE: [ "#8b2ba5", "#26112f" ],
+            AJ_CHALLENGE: [ "#b5c99a", "#516270" ],
+            ALL_TRACKS: [ "#3157c8", "#09101e" ]
+        }[b.state.mode] || [ "#e7473d", "#171c23" ], d = a.createLinearGradient(0, 0, t, n);
+        d.addColorStop(0, l[1]), d.addColorStop(1, "#101720"), a.fillStyle = d, a.fillRect(0, 0, t, n), 
+        a.fillStyle = l[0], a.fillRect(0, 0, t, 22), a.fillStyle = "#ffffff", a.textAlign = "center", 
+        a.font = "900 52px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+        a.fillText(x[b.state.mode].title, t / 2, 102), a.font = "700 26px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+        a.fillStyle = "rgba(255,255,255,.78)", a.fillText(x[b.state.mode].label + "から " + e.length + "曲を選曲", t / 2, 153), 
+        e.forEach(function(e, n) {
+            var o = 198 + n * i, d = "MASTER" === e.difficulty, s = d ? "#9d20df" : "#17191d", c = d ? "#c965f2" : "#ff4058";
+            a.save(), a.shadowColor = "rgba(0,0,0,.35)", a.shadowBlur = 18, a.shadowOffsetY = 8, 
+            W(a, r, o, t - 2 * r, 178, 22), a.fillStyle = "#fbfae4", a.fill(), a.restore(), 
+            W(a, r, o, t - 2 * r, 55, 22), a.fillStyle = "#1d2b3a", a.fill(), a.fillStyle = "#ffffff", 
+            a.textAlign = "left", a.font = "900 25px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            a.fillText("TRACK " + (n + 1), r + 24, o + 37), a.fillStyle = c, a.fillRect(r + 190, o + 12, 5, 31), 
+            a.fillStyle = "#ffffff", a.font = "800 22px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            a.fillText(e.difficulty + " / " + (e.genre || "不明"), r + 213, o + 36), a.fillStyle = "#0b0d10", 
+            a.font = "800 34px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif";
+            var p = V(e.name, a, t - 2 * r - 190), u = p.slice(0, 2);
+            u.length > 1 && p.length > 2 && (u[1] = u[1].slice(0, -1) + "…"), u.forEach(function(e, t) {
+                a.fillText(e, r + 27, o + 101 + 42 * t);
+            }), W(a, t - r - 128, o + 81, 100, 55, 12), a.fillStyle = s, a.fill(), a.strokeStyle = c, 
+            a.lineWidth = 3, a.stroke(), a.fillStyle = "#ffffff", a.textAlign = "center", 
+            a.font = "900 27px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+            a.fillText(e.level || "不明", t - r - 78, o + 118);
+        }), a.fillStyle = "rgba(255,255,255,.62)", a.textAlign = "center", 
+        a.font = "600 21px -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans JP',sans-serif", 
+        a.fillText("CHUNITHM Unplayed Picker", t / 2, n - 35);
+        return o;
+    }
+    function Y(e) {
+        return new Promise(function(t, r) {
+            e.toBlob(function(e) {
+                e ? t(e) : r(new Error("画像を生成できませんでした"));
+            }, "image/png");
+        });
+    }
+    function Z() {
+        var e = new Date, t = function(e) {
+            return String(e).padStart(2, "0");
+        };
+        return "chunithm-pick-" + e.getFullYear() + t(e.getMonth() + 1) + t(e.getDate()) + "-" + t(e.getHours()) + t(e.getMinutes()) + ".png";
+    }
+    function $(e, t) {
+        var r = URL.createObjectURL(e), i = document.createElement("a");
+        i.href = r, i.download = t, document.body.appendChild(i), i.click(), i.remove(), 
+        setTimeout(function() {
+            URL.revokeObjectURL(r);
+        }, 1e3);
+    }
+    function ee(e) {
+        I("共有画像を生成中…"), Y(X(e)).then(function(t) {
+            $(t, Z()), I("共有画像を保存しました");
+        }).catch(function(e) {
+            console.error("[CHUNITHM Picker Image]", e), I("共有画像を生成できませんでした");
+        });
+    }
+    function te(e) {
+        var t = "CHUNITHMで次に遊ぶ" + e.length + "曲を抽選しました。 #CHUNITHM", r = !1;
+        try {
+            r = "function" == typeof File && navigator.share && navigator.canShare && navigator.canShare({
+                files: [ new File([ "" ], "share.png", {
+                    type: "image/png"
+                }) ]
+            });
+        } catch (e) {}
+        var i = r ? null : window.open("about:blank", "_blank");
+        I("共有画像を生成中…"), Y(X(e)).then(function(n) {
+            var o = Z();
+            if (r) {
+                var a = new File([ n ], o, {
+                    type: "image/png"
+                });
+                return navigator.share({
+                    files: [ a ],
+                    title: "CHUNITHM 抽選結果",
+                    text: t
+                }).then(function() {
+                    I("共有しました");
+                });
+            }
+            $(n, o), i && (i.opener = null, i.location.href = "https://twitter.com/intent/tweet?text=" + encodeURIComponent(t)), 
+            I("画像を保存しました。Xの投稿画面で添付してください");
+        }).catch(function(e) {
+            i && !i.closed && i.close(), "AbortError" !== e.name && (console.error("[CHUNITHM Picker Share]", e), 
+            I("共有できませんでした。保存ボタンをお試しください"));
+        });
+    }
     e = document.getElementById("chuni-random-picker"), t = document.getElementById("chuni-random-picker-utility"), 
     window.CHUNITHM_PICKER_SCROLL_LOCK && "function" == typeof window.CHUNITHM_PICKER_SCROLL_LOCK.restore && window.CHUNITHM_PICKER_SCROLL_LOCK.restore(), 
     e && e.remove(), t && t.remove(), b.settings = function() {
@@ -511,10 +619,14 @@
             return 0 === i.length ? I("選択中の難易度に抽選対象曲がありません") : I(""), i;
         }(Number(b.ui.count.value));
         b.state.results = e, b.state.renderResults = function t() {
-            e.length ? (b.ui.result.innerHTML = "<div style='margin-bottom:4px;font-size:11px;color:#cbd3dc;text-align:center'>曲カードをタップすると次の抽選でもKEEP</div>" + e.map(function(e, t) {
+            e.length ? (b.ui.result.innerHTML = "<div style='display:grid;grid-template-columns:minmax(0,1fr) 38px 38px;gap:7px;align-items:center;margin-bottom:4px'><div style='font-size:11px;color:#cbd3dc;text-align:center'>曲カードをタップすると次の抽選でもKEEP</div><button id='crp-save-image' type='button' title='画像を保存' aria-label='抽選結果を画像で保存' style='width:38px;height:38px;padding:8px;border:1px solid #687383;border-radius:8px;background:#252d38;color:#fff;cursor:pointer'><svg viewBox='0 0 24 24' aria-hidden='true' style='display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round'><path d='M12 3v12m0 0 4-4m-4 4-4-4M5 20h14'/></svg></button><button id='crp-share-image' type='button' title='画像を共有' aria-label='抽選結果の画像を共有' style='width:38px;height:38px;padding:8px;border:1px solid #687383;border-radius:8px;background:#252d38;color:#fff;cursor:pointer'><svg viewBox='0 0 24 24' aria-hidden='true' style='display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round'><circle cx='18' cy='5' r='3'/><circle cx='6' cy='12' r='3'/><circle cx='18' cy='19' r='3'/><path d='m8.7 10.7 6.6-4.2m-6.6 6.8 6.6 4.2'/></svg></button></div>" + e.map(function(e, t) {
                 var r = "MASTER" === e.difficulty, i = r ? "#9d20df" : "#111214", n = r ? "#b845ee" : "#30343a", o = !!b.state.kept[H(e.difficulty, e.name)];
                 return "<div data-crp-result-index='" + t + "' role='button' tabindex='0' aria-pressed='" + o + "' style='box-sizing:border-box;background:" + (o ? "#f5c84c" : "#fff") + ";padding:5px;margin-top:9px;border:2px solid " + (o ? "#ffe680" : "transparent") + ";border-radius:7px;box-shadow:" + (o ? "0 0 0 2px #9b6b00,0 5px 14px rgba(0,0,0,.38)" : "0 4px 10px rgba(0,0,0,.24)") + ";cursor:pointer'><div style='display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px;align-items:center;min-height:29px;box-sizing:border-box;padding:4px 7px;background:#1d2b3a;color:#fff;overflow:hidden'><span style='white-space:nowrap;font-size:12px;font-weight:900;letter-spacing:.02em'>TRACK " + (t + 1) + "</span><div style='position:relative;min-width:0;overflow:hidden;box-sizing:border-box;background:" + i + ";border:1px solid " + n + ";min-height:22px;padding:2px 34px;border-radius:4px;font-size:11px;font-weight:900;text-align:center;line-height:1.35;box-shadow:inset 0 -1px 0 rgba(0,0,0,.2)'>" + (r ? "" : "<span style='position:absolute;left:0;top:0;bottom:0;width:34px;background:linear-gradient(45deg,transparent 0 18%,#ff3151 19% 34%,#6f6870 35% 40%,#ff3151 41% 56%,transparent 57% 100%)'></span><span style='position:absolute;right:0;top:0;bottom:0;width:34px;background:linear-gradient(-45deg,transparent 0 18%,#ff3151 19% 34%,#6f6870 35% 40%,#ff3151 41% 56%,transparent 57% 100%)'></span>") + "<span style='position:relative;z-index:1;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap'>" + (o ? "KEEP / " : "") + J(e.difficulty) + " / " + J(e.genre || "不明") + "</span>" + (e.locked ? "<span title='未解禁の可能性があります' aria-label='未解禁の可能性があります' style='position:absolute;top:50%;right:5px;transform:translateY(-50%);white-space:nowrap;z-index:2;background:#fff;color:#111;border:1px solid rgba(0,0,0,.22);padding:2px 5px;border-radius:5px;box-shadow:0 1px 3px rgba(0,0,0,.3);font-size:11px;line-height:1.2'>🔒</span>" : "") + "</div></div><div style='position:relative;display:flex;align-items:center;justify-content:flex-start;min-height:44px;background:#faf9d9;color:#080808;padding:8px 48px 8px 12px;box-sizing:border-box'><div style='min-width:0;width:100%;font-size:16px;font-weight:800;line-height:1.35;text-align:left;overflow-wrap:anywhere;word-break:break-word'>" + J(e.name) + "</div><span style='position:absolute;top:50%;right:0;transform:translateY(-50%);white-space:nowrap;background:" + i + ";border:1px solid " + n + ";color:#fff;padding:3px 7px;border-radius:5px;font-size:13px;font-weight:900'>" + J(e.level || "不明") + "</span></div></div>";
-            }).join(""), Array.from(b.ui.result.querySelectorAll("[data-crp-result-index]")).forEach(function(r) {
+            }).join(""), b.ui.result.querySelector("#crp-save-image").onclick = function() {
+                ee(e);
+            }, b.ui.result.querySelector("#crp-share-image").onclick = function() {
+                te(e);
+            }, Array.from(b.ui.result.querySelectorAll("[data-crp-result-index]")).forEach(function(r) {
                 function i() {
                     var i = e[Number(r.getAttribute("data-crp-result-index"))], n = H(i.difficulty, i.name);
                     b.state.kept[n] ? (delete b.state.kept[n], I("KEEPを解除しました：" + i.name)) : (b.state.kept[n] = i, 
